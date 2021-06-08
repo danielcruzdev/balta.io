@@ -14,6 +14,10 @@ namespace MeuApp
             int outro = 25;
 
             valor = outro;
+
+            //Conversão Explicita de Dados
+            int inteiro = 100;
+            uint inteiroSemSinal = (uint)inteiro;
         }
     }
 }
