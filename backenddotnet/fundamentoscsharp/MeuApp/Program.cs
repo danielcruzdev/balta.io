@@ -23,6 +23,9 @@ namespace MeuApp
 
             //Parse - Sempre espera uma string
             int numeroInteiro = int.Parse("100");
+
+            //Convert - Permite que a gente converta um tipo para outro tipo
+            int numeroInteiro2 = Convert.ToInt32(20.8);
         }
     }
 }
