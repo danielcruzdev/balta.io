@@ -14,10 +14,15 @@ namespace MeuApp
             int outro = 25;
 
             valor = outro;
+            Console.WriteLine(valor);
 
             //Conversão Explicita de Dados
             int inteiro = 100;
             uint inteiroSemSinal = (uint)inteiro;
+            Console.WriteLine(inteiroSemSinal);
+
+            //Parse - Sempre espera uma string
+            int numeroInteiro = int.Parse("100");
         }
     }
 }
