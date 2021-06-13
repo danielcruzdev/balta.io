@@ -26,6 +26,11 @@ namespace MeuApp
 
             //Convert - Permite que a gente converta um tipo para outro tipo
             int numeroInteiro2 = Convert.ToInt32(20.8);
+
+            //Operadores de atribuição
+            int x = 2;
+            x = 2 + 2;
+            Console.WriteLine(x);
         }
     }
 }
