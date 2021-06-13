@@ -35,22 +35,55 @@ namespace MeuApp
             #endregion
 
             #region Funções e Metodos
-            MeuMetodo("Utilizando Método!");
-            Console.WriteLine(RetornaNome("Daniel", "Cruz", 23));
-            #endregion            
+            //MeuMetodo("Utilizando Método!");
+            //Console.WriteLine(RetornaNome("Daniel", "Cruz", 23));
+            #endregion
+
+            #region  Value Types
+            //int x = 25;
+            //// Variável y é uma cópia da x
+            //int y = x;
+
+            //Console.WriteLine(x);
+            //Console.WriteLine(y);
+
+            //x = 32;
+
+            //Console.WriteLine(x);
+            //Console.WriteLine(y);
+            #endregion
+
+            #region Reference Types
+
+            //var arr = new string[2];
+            //arr[0] = "Item 1";
+
+            //var arr2 = arr;
+
+            //Console.WriteLine(arr[0]);
+            //Console.WriteLine(arr2[0]);
+
+            //arr[0] = "Item 2";
+
+            //Console.WriteLine(arr[0]);
+            //Console.WriteLine(arr2[0]);
+            #endregion
         }
 
+        #region Funções 
         private static void MeuMetodo(string parametro)
         {
             Console.WriteLine(parametro);
-        }   
-
-        private static string RetornaNome(string nome, string sobrenome, int idade = 0)  
-        {
-            if(idade == 0)
-                return $"{nome} {sobrenome}";
-            else 
-               return $"{nome} {sobrenome} - Idade: {idade.ToString()}";
         }
+
+        private static string RetornaNome(string nome, string sobrenome, int idade = 0)
+        {
+            if (idade == 0)
+                return $"{nome} {sobrenome}";
+            else
+                return $"{nome} {sobrenome} - Idade: {idade}";
+        }
+
+        #endregion
     }
 }
