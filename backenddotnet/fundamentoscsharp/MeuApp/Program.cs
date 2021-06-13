@@ -36,15 +36,21 @@ namespace MeuApp
 
             #region Funções e Metodos
             MeuMetodo("Utilizando Método!");
+            Console.WriteLine(RetornaNome("Daniel", "Cruz", 23));
             #endregion            
         }
 
-
-
-        static void MeuMetodo(string parametro)
+        private static void MeuMetodo(string parametro)
         {
             Console.WriteLine(parametro);
+        }   
+
+        private static string RetornaNome(string nome, string sobrenome, int idade = 0)  
+        {
+            if(idade == 0)
+                return $"{nome} {sobrenome}";
+            else 
+               return $"{nome} {sobrenome} - Idade: {idade.ToString()}";
         }
-        
     }
 }
