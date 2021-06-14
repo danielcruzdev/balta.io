@@ -6,6 +6,11 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
+            Soma();
+        }
+
+        private static void Soma()
+        {
             Console.Clear();
 
             Console.Write("Primeiro valor: ");
