@@ -68,6 +68,16 @@ namespace MeuApp
             //Console.WriteLine(arr[0]);
             //Console.WriteLine(arr2[0]);
             #endregion
+
+            #region using Struct
+            var mouseGamer = new Product(1, "Mouse Gamer", 299.99);
+
+
+            Console.WriteLine(mouseGamer.Id);
+            Console.WriteLine(mouseGamer.Name);
+            Console.WriteLine(mouseGamer.Price);
+            Console.WriteLine(mouseGamer.PriceInDolar(5.43));
+            #endregion
         }
 
         #region Funções 
@@ -85,5 +95,26 @@ namespace MeuApp
         }
 
         #endregion
+    }
+
+    struct Product
+    {
+        public Product(int id, string name, double price)
+        {
+            Id = id;
+            Name = name;
+            Price = price;
+        }
+
+        //Propriedades
+        public int Id;
+        public string Name;
+        public double Price;
+
+        //Métodos
+        public double PriceInDolar(double dolar)
+        {
+            return Price * dolar;
+        }
     }
 }
