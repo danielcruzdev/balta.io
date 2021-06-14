@@ -69,15 +69,19 @@ namespace MeuApp
             //Console.WriteLine(arr2[0]);
             #endregion
 
-            #region using Struct
-            var mouseGamer = new Product(1, "Mouse Gamer", 299.99);
+            #region using Struct and Enum
+            var mouseGamer = new Product(1, "Mouse Gamer", 299.99, EProductType.Product);
 
 
             Console.WriteLine(mouseGamer.Id);
             Console.WriteLine(mouseGamer.Name);
             Console.WriteLine(mouseGamer.Price);
             Console.WriteLine(mouseGamer.PriceInDolar(5.43));
+            Console.WriteLine(mouseGamer.Type);
+            Console.WriteLine((int)mouseGamer.Type);
             #endregion
+
+
         }
 
         #region Funções 
@@ -99,22 +103,30 @@ namespace MeuApp
 
     struct Product
     {
-        public Product(int id, string name, double price)
+        public Product(int id, string name, double price, EProductType type)
         {
             Id = id;
             Name = name;
             Price = price;
+            Type = type;
         }
 
         //Propriedades
         public int Id;
         public string Name;
         public double Price;
+        public EProductType Type;
 
         //Métodos
         public double PriceInDolar(double dolar)
         {
             return Price * dolar;
         }
+    }
+
+    enum EProductType
+    {
+        Product = 1,
+        Service = 2
     }
 }
