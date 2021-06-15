@@ -2,7 +2,7 @@
 
 namespace Calculator
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -14,13 +14,9 @@ namespace Calculator
             Console.Clear();
             Console.WriteLine("-----SOMA-----");
 
-            Console.Write("Primeiro valor: ");
-            float v1 = float.Parse(Console.ReadLine());
+            var valores = GetValuesUser();
 
-            Console.Write("Segundo valor: ");
-            float v2 = float.Parse(Console.ReadLine());
-
-            float resultado = v1 + v2;
+            float resultado = valores.Valor1 + valores.Valor2;
             Console.WriteLine("--------------------------");
             Console.WriteLine($"Soma: {resultado}");
             Console.ReadKey();
@@ -31,13 +27,9 @@ namespace Calculator
             Console.Clear();
             Console.WriteLine("-----SUBTRAÇÃO-----");
 
-            Console.Write("Primeiro valor: ");
-            float v1 = float.Parse(Console.ReadLine());
+            var valores = GetValuesUser();
 
-            Console.Write("Segundo valor: ");
-            float v2 = float.Parse(Console.ReadLine());
-
-            float resultado = v1 - v2;
+            float resultado = valores.Valor1 - valores.Valor2;
             Console.WriteLine("--------------------------");
             Console.WriteLine($"Subtração: {resultado}");
             Console.ReadKey();
@@ -47,14 +39,9 @@ namespace Calculator
         {
             Console.Clear();
             Console.WriteLine("-----DIVISÃO-----");
+            var valores = GetValuesUser();
 
-            Console.Write("Primeiro valor: ");
-            float v1 = float.Parse(Console.ReadLine());
-
-            Console.Write("Segundo valor: ");
-            float v2 = float.Parse(Console.ReadLine());
-
-            float resultado = v1 / v2;
+            float resultado = valores.Valor1 / valores.Valor2;
             Console.WriteLine("--------------------------");
             Console.WriteLine($"Divisão: {resultado}");
             Console.ReadKey();
@@ -64,14 +51,10 @@ namespace Calculator
         {
             Console.Clear();
             Console.WriteLine("-----MULTIPLICAÇÃO-----");
+            var valores = GetValuesUser();
 
-            Console.Write("Primeiro valor: ");
-            float v1 = float.Parse(Console.ReadLine());
+            float resultado = valores.Valor1 * valores.Valor2;
 
-            Console.Write("Segundo valor: ");
-            float v2 = float.Parse(Console.ReadLine());
-
-            float resultado = v1 * v2;
             Console.WriteLine("--------------------------");
             Console.WriteLine($"Multiplicacao: {resultado}");
             Console.ReadKey();
@@ -90,9 +73,11 @@ namespace Calculator
 
             Console.WriteLine("-------------------");
             Console.Write("Selecione uma opção:");
-            short? operacao = short.Parse(Console.ReadLine());
 
-            if (operacao != null)
+            short operacao;
+            bool canParse = short.TryParse(Console.ReadLine(), out operacao);
+
+            if (canParse)
             {
                 switch (operacao)
                 {
@@ -123,8 +108,27 @@ namespace Calculator
             }
             else
             {
+                Console.Clear();
+                Console.WriteLine("Digite um número válido!");
+                Console.WriteLine("Para continuar pressione Enter.");
+                Console.ReadKey();
                 Menu();
             }
+        }
+
+        private static Valores GetValuesUser()
+        {
+            Console.Write("Primeiro valor: ");
+            float v1 = float.Parse(Console.ReadLine());
+
+            Console.Write("Segundo valor: ");
+            float v2 = float.Parse(Console.ReadLine());
+
+            var valores = new Valores();
+            valores.Valor1 = v1;
+            valores.Valor2 = v2;
+
+            return valores;
         }
     }
 }
