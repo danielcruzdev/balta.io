@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace StopWatch
 {
@@ -6,7 +7,7 @@ namespace StopWatch
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Start();
         }
 
         private static void Start()
@@ -16,7 +17,10 @@ namespace StopWatch
 
             while (currentTime != time)
             {
+                Console.Clear();
                 currentTime++;
+                Console.WriteLine(currentTime);
+                Thread.Sleep(1000);
             }
         }
     }
