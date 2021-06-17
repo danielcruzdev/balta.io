@@ -6,7 +6,48 @@ namespace TextEditor
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu();
+        }
+
+        static void Menu()
+        {
+            Console.Clear();
+            Console.WriteLine("O que você deseja fazer?");
+            Console.WriteLine("1 - Abrir arquivo");
+            Console.WriteLine("2 - Criar arquivo");
+            Console.WriteLine("0 - Sair");
+
+            short option;
+            var hasOption = short.TryParse(Console.ReadLine(), out option);
+
+            if (hasOption)
+            {
+                switch (option)
+                {
+                    case 0:
+                        Environment.Exit(0); ;
+                        break;
+                    case 1:
+                        Abrir();
+                        break;
+                    case 2:
+                        Editar();
+                        break;
+                    default:
+                        Menu();
+                        break;
+                }
+            }
+        }
+
+        static void Abrir()
+        {
+
+        }
+
+        static void Editar()
+        {
+
         }
     }
 }
