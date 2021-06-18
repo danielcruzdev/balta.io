@@ -13,10 +13,23 @@ namespace Strings
             //Console.WriteLine(id);
             #endregion
 
-            var price = 10.2;
-            var texto = $"O preço do produto é: {price}";
+            #region INTERPOLACAO
 
-            Console.WriteLine(texto);
+            //var price = 10.2;
+            //var texto = $"O preço do produto é: {price}";
+
+            //Console.WriteLine(texto);
+
+            #endregion
+
+            #region COMPARACAO ENTRE STRINGS 
+            var texto = "Testando";
+            Console.WriteLine(texto.CompareTo("Testando"));
+
+            var texto2 = "Esse texto contem a palavra teste?";
+            Console.WriteLine(texto2.Contains("teste"));
+            Console.WriteLine(texto2.Contains("TESTE", StringComparison.OrdinalIgnoreCase));
+            #endregion
         }
     }
 }
