@@ -6,10 +6,17 @@ namespace Strings
     {
         static void Main(string[] args)
         {
-            var id = Guid.NewGuid();
-            id.ToString();
+            #region GUID
+            //var id = Guid.NewGuid();
+            //id.ToString();
 
-            Console.WriteLine(id);
+            //Console.WriteLine(id);
+            #endregion
+
+            var price = 10.2;
+            var texto = $"O preço do produto é: {price}";
+
+            Console.WriteLine(texto);
         }
     }
 }
