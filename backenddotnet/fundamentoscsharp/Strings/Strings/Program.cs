@@ -32,9 +32,15 @@ namespace Strings
             #endregion
 
             #region StartWith/EndsWith
+            //var texto = "Este texto é um teste";
+            //Console.WriteLine(texto.StartsWith("Este"));
+            //Console.WriteLine(texto.EndsWith("teste"));
+            #endregion
+
+            #region Equals
             var texto = "Este texto é um teste";
-            Console.WriteLine(texto.StartsWith("Este"));
-            Console.WriteLine(texto.EndsWith("teste"));
+            Console.WriteLine(texto.Equals(texto + " "));
+            Console.WriteLine(texto.Equals(texto));
             #endregion
         }
     }
