@@ -23,12 +23,18 @@ namespace Strings
             #endregion
 
             #region COMPARACAO ENTRE STRINGS 
-            var texto = "Testando";
-            Console.WriteLine(texto.CompareTo("Testando"));
+            //var texto = "Testando";
+            //Console.WriteLine(texto.CompareTo("Testando"));
 
-            var texto2 = "Esse texto contem a palavra teste?";
-            Console.WriteLine(texto2.Contains("teste"));
-            Console.WriteLine(texto2.Contains("TESTE", StringComparison.OrdinalIgnoreCase));
+            //var texto2 = "Esse texto contem a palavra teste?";
+            //Console.WriteLine(texto2.Contains("teste"));
+            //Console.WriteLine(texto2.Contains("TESTE", StringComparison.OrdinalIgnoreCase));
+            #endregion
+
+            #region StartWith/EndsWith
+            var texto = "Este texto é um teste";
+            Console.WriteLine(texto.StartsWith("Este"));
+            Console.WriteLine(texto.EndsWith("teste"));
             #endregion
         }
     }
