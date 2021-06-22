@@ -38,9 +38,15 @@ namespace Strings
             #endregion
 
             #region Equals
-            var texto = "Este texto é um teste";
-            Console.WriteLine(texto.Equals(texto + " "));
-            Console.WriteLine(texto.Equals(texto));
+            //var texto = "Este texto é um teste";
+            //Console.WriteLine(texto.Equals(texto + " "));
+            //Console.WriteLine(texto.Equals(texto));
+            #endregion[
+
+            #region Indices
+            var texto = "Esse texto é um teste";
+            Console.WriteLine(texto.IndexOf("é"));
+            Console.WriteLine(texto.LastIndexOf("s"));
             #endregion
         }
     }
