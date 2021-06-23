@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Strings
 {
@@ -44,9 +45,42 @@ namespace Strings
             #endregion[
 
             #region Indices
-            var texto = "Esse texto é um teste";
-            Console.WriteLine(texto.IndexOf("é"));
-            Console.WriteLine(texto.LastIndexOf("s"));
+            //var texto = "Esse texto é um teste";
+            //Console.WriteLine(texto.IndexOf("é"));
+            //Console.WriteLine(texto.LastIndexOf("s"));
+            #endregion
+
+            #region Adicionais
+            //var texto = "Este texto é um teste";
+            //Console.WriteLine(texto.ToLower());
+            //Console.WriteLine(texto.ToUpper());
+            //Console.WriteLine(texto.Insert(5, "Aqui "));
+            //Console.WriteLine(texto.Remove(5, 5));
+            //Console.WriteLine(texto.Length);
+            //Console.WriteLine(texto.Replace("Este", "Isto"));
+
+            //var divisao = texto.Split(" ");
+            //foreach (var item in divisao)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //var resultado = texto.Substring(5, texto.LastIndexOf("o"));
+            //Console.WriteLine(resultado);
+
+            //var texto2 = "       Este texto é um teste           ";
+            //Console.WriteLine(texto2.Trim());
+            #endregion
+
+            #region StringBuilder
+            var texto = new StringBuilder();
+            texto.Append("Este texto é um teste1 \n");
+            texto.Append("Este texto é um teste2 \n");
+            texto.Append("Este texto é um teste3 \n");
+            texto.Append("Este texto é um teste4 \n");
+
+            texto.ToString();
+            Console.WriteLine(texto);
             #endregion
         }
     }
