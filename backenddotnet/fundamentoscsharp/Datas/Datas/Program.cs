@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Datas
 {
@@ -7,7 +8,7 @@ namespace Datas
         static void Main(string[] args)
         {
             Console.Clear();
-            var data = DateTime.Now;
+            //var data = DateTime.Now;
             //var dateNow = DateTime.Now;
             //Console.WriteLine(data);
             //Console.WriteLine(data.Year);
@@ -24,13 +25,21 @@ namespace Datas
             //Console.WriteLine(data.AddYears(1));
 
 
-            if (data.Date == DateTime.Now.Date)
-            {
-                Console.WriteLine("É igual!");
-            }
+            //if (data.Date == DateTime.Now.Date)
+            //{
+            //    Console.WriteLine("É igual!");
+            //}
 
-            Console.WriteLine(data);
+            //Console.WriteLine(data);
 
+            var pt = new CultureInfo("pt-PT");
+            var br = new CultureInfo("pt-BR");
+            var en = new CultureInfo("en-US");
+            var de = new CultureInfo("de-DE");
+            var atual = CultureInfo.CurrentCulture;
+
+
+            Console.WriteLine(DateTime.Now.ToString("D", de));
         }
     }
 }
