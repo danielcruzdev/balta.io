@@ -6,7 +6,10 @@ namespace Datas
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Clear();
+            var data = new DateTime();
+            var dataHoje = DateTime.Now;
+            Console.WriteLine(dataHoje);
         }
     }
 }
