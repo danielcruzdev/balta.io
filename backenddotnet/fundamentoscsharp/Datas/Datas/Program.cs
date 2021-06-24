@@ -17,8 +17,11 @@ namespace Datas
             //Console.WriteLine(data.Minute);
             //Console.WriteLine(data.Second);
 
-            var formatada = String.Format("{0:yyyy}", data);
-            Console.WriteLine(formatada);
+            //var formatada = String.Format("{0:yyyy}", data);        
+
+            Console.WriteLine(data.AddDays(1));
+            Console.WriteLine(data.AddMonths(1));
+            Console.WriteLine(data.AddYears(1));
         }
     }
 }
