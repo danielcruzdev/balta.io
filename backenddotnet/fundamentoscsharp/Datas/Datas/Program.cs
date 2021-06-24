@@ -19,9 +19,18 @@ namespace Datas
 
             //var formatada = String.Format("{0:yyyy}", data);        
 
-            Console.WriteLine(data.AddDays(1));
-            Console.WriteLine(data.AddMonths(1));
-            Console.WriteLine(data.AddYears(1));
+            //Console.WriteLine(data.AddDays(1));
+            //Console.WriteLine(data.AddMonths(1));
+            //Console.WriteLine(data.AddYears(1));
+
+
+            if (data.Date == DateTime.Now.Date)
+            {
+                Console.WriteLine("É igual!");
+            }
+
+            Console.WriteLine(data);
+
         }
     }
 }
