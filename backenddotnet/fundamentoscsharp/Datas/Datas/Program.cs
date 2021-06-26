@@ -43,9 +43,23 @@ namespace Datas
             Console.WriteLine(dateTime);
             Console.WriteLine(dateTime.ToLocalTime());
 
-            var timeZoneAutralia = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+            var timeZones = TimeZoneInfo.GetSystemTimeZones();
 
-            Console.WriteLine(timeZoneAutralia);
+            foreach (var timeZone in timeZones)
+            {
+                Console.WriteLine(timeZone.Id);
+                Console.WriteLine(timeZone.DisplayName);
+                Console.WriteLine(timeZone.BaseUtcOffset);
+                Console.WriteLine(TimeZoneInfo.ConvertTimeFromUtc(dateTime, timeZone));
+                Console.WriteLine("|---------------------------------------|");
+            }
+
+            var timeZoneAustralia = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+
+            Console.WriteLine(timeZoneAustralia);
+
+            var horaAustralia = TimeZoneInfo.ConvertTimeFromUtc(dateTime, timeZoneAustralia);
+            Console.WriteLine(horaAustralia);
         }
     }
 }
