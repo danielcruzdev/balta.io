@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace Moedas
 {
@@ -10,10 +9,13 @@ namespace Moedas
             Console.Clear();
 
             decimal valor = 10.25m;
-            var culture = CultureInfo.CreateSpecificCulture("pt-BR");
 
-            Console.WriteLine(valor.ToString("C", culture));
+            //var culture = CultureInfo.CreateSpecificCulture("pt-BR");
+            //Console.WriteLine(valor.ToString("C", culture));
 
+            Console.WriteLine(Math.Round(valor)); //Aredonda
+            Console.WriteLine(Math.Ceiling(valor)); //Aredonda para cima
+            Console.WriteLine(Math.Floor(valor)); //Aredonda para baixo
         }
     }
 }
