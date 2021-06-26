@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace Datas
 {
@@ -32,14 +31,21 @@ namespace Datas
 
             //Console.WriteLine(data);
 
-            var pt = new CultureInfo("pt-PT");
-            var br = new CultureInfo("pt-BR");
-            var en = new CultureInfo("en-US");
-            var de = new CultureInfo("de-DE");
-            var atual = CultureInfo.CurrentCulture;
+            //var pt = new CultureInfo("pt-PT");
+            //var br = new CultureInfo("pt-BR");
+            //var en = new CultureInfo("en-US");
+            //var de = new CultureInfo("de-DE");
+            //var atual = CultureInfo.CurrentCulture;
+
+            var dateTime = DateTime.UtcNow;
 
 
-            Console.WriteLine(DateTime.Now.ToString("D", de));
+            Console.WriteLine(dateTime);
+            Console.WriteLine(dateTime.ToLocalTime());
+
+            var timeZoneAutralia = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+
+            Console.WriteLine(timeZoneAutralia);
         }
     }
 }
