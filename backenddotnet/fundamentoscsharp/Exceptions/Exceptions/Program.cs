@@ -17,6 +17,13 @@ namespace Exceptions
 
                 Cadastrar(null);
             }
+            catch (MinhaException ex)
+            {
+                Console.WriteLine($"Inner Exception: {ex.InnerException}");
+                Console.WriteLine($"Message: {ex.Message}");
+                Console.WriteLine($"Message: {ex.DataHoraErro}");
+                Console.WriteLine($"Minha exception....");
+            }
             catch (IndexOutOfRangeException ex)
             {
                 Console.WriteLine($"Inner Exception: {ex.InnerException}");
@@ -35,14 +42,28 @@ namespace Exceptions
                 Console.WriteLine($"Message: {ex.Message}");
                 Console.WriteLine($"Oops! Algo errado aconteceu...");
             }
+            finally
+            {
+                Console.WriteLine("Chegou ao fim!");
+            }
         }
 
         static void Cadastrar(string texto)
         {
             if (string.IsNullOrEmpty(texto))
             {
-                throw new ArgumentNullException("O texto não pode ser nulo");
+                throw new MinhaException(DateTime.Now);
             }
+        }
+
+        public class MinhaException : Exception
+        {
+            public MinhaException(DateTime dataHora)
+            {
+                DataHoraErro = dataHora;
+            }
+
+            public DateTime DataHoraErro { get; set; }
         }
     }
 }
