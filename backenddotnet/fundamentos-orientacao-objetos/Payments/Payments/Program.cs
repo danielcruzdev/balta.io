@@ -9,4 +9,14 @@ namespace Payments
             Console.WriteLine("Hello World!");
         }
     }
+
+    public class Payment
+    {
+        //Propriedades 
+        DateTime Vencimento;
+
+        //Métodos
+        void Pagar() { }
+
+    }
 }
