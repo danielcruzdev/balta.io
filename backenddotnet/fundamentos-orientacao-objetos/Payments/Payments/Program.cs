@@ -6,39 +6,39 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            var pagamentoBoleto = new PagamentoBoleto();
-            pagamentoBoleto.numeroBoleto = "NumeroBoleto";
+            var pagamento = new Pagamento();
+            pagamento.DataPagamento2 = DateTime.Now;
         }
     }
 
     public class Pagamento
     {
         //Propriedades 
-        DateTime Vencimento;
+        public DateTime Vencimento { get; set; }
+
+        private DateTime DataPagamento;
+
+        public DateTime DataPagamento2
+        {
+            get
+            {
+                Console.WriteLine("Lendo Valor");
+                return DataPagamento;
+            }
+            set
+            {
+                Console.WriteLine("Atribuindo Valor");
+                DataPagamento = value;
+            }
+        }
+
 
         //Métodos
-        public virtual void Pagar()
-        {
-        }
+        public void Pagar() { }
     }
 
-    public class PagamentoBoleto : Pagamento
+    public class Endereco
     {
-        public string numeroBoleto;
-
-        public override void Pagar()
-        {
-            //Regra do boleto
-        }
-    }
-
-    public class PagamentoCartaoCredito : Pagamento
-    {
-        public string numeroCartao;
-
-        public override void Pagar()
-        {
-            //Regra do cartão de crédito
-        }
+        string ZipCode;
     }
 }
