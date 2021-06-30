@@ -6,17 +6,39 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var pagamento = new Pagamento();
+            pagamento.DataPagamento2 = DateTime.Now;
         }
     }
 
-    public class Payment
+    public class Pagamento
     {
         //Propriedades 
-        DateTime Vencimento;
+        public DateTime Vencimento { get; set; }
+
+        private DateTime DataPagamento;
+
+        public DateTime DataPagamento2
+        {
+            get
+            {
+                Console.WriteLine("Lendo Valor");
+                return DataPagamento;
+            }
+            set
+            {
+                Console.WriteLine("Atribuindo Valor");
+                DataPagamento = value;
+            }
+        }
+
 
         //Métodos
-        void Pagar() { }
+        public void Pagar() { }
+    }
 
+    public class Endereco
+    {
+        string ZipCode;
     }
 }
