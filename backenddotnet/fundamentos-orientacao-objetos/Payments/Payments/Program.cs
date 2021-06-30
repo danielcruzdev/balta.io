@@ -6,7 +6,8 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var pagamentoBoleto = new PagamentoBoleto();
+            pagamentoBoleto.numeroBoleto = "NumeroBoleto";
         }
     }
 
@@ -16,13 +17,28 @@ namespace Payments
         DateTime Vencimento;
 
         //Métodos
-        void Pagar()
+        public virtual void Pagar()
         {
         }
     }
 
     public class PagamentoBoleto : Pagamento
     {
+        public string numeroBoleto;
 
+        public override void Pagar()
+        {
+            //Regra do boleto
+        }
+    }
+
+    public class PagamentoCartaoCredito : Pagamento
+    {
+        public string numeroCartao;
+
+        public override void Pagar()
+        {
+            //Regra do cartão de crédito
+        }
     }
 }
