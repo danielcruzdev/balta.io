@@ -10,13 +10,19 @@ namespace Payments
         }
     }
 
-    public class Payment
+    public class Pagamento
     {
         //Propriedades 
         DateTime Vencimento;
 
         //Métodos
-        void Pagar() { }
+        void Pagar()
+        {
+        }
+    }
+
+    public class PagamentoBoleto : Pagamento
+    {
 
     }
 }
