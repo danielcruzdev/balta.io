@@ -11,9 +11,17 @@
     public class Pagamento
     {
         //Métodos
-        public void Pagar(string numero) { }
-        public void Pagar(string numero, int numero2) { }
-        public void Pagar(string numero, int numero2, int numero3) { }
+        public virtual void Pagar(string numero) { }
+        public virtual void Pagar(string numero, int numero2) { }
+        public virtual void Pagar(string numero, int numero2, int numero3) { }
+    }
+
+    public class PagamentoViaCartão : Pagamento
+    {
+        public override void Pagar(string numero)
+        {
+
+        }
     }
 
     public class Endereco
