@@ -6,13 +6,25 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            Pagamento.Vencimento = DateTime.Now;
             Console.WriteLine("Hello World!");
         }
     }
 
-    public sealed class Pagamento
+    public class Pagamento : IPagamento
     {
-        public static DateTime Vencimento { get; set; }
+        public DateTime Vencimento { get; set; }
+        public double Valor { get; set; }
+
+        public void Pagar(double valor)
+        {
+
+        }
+    }
+
+    public interface IPagamento
+    {
+        DateTime Vencimento { get; set; }
+        double Valor { get; set; }
+        void Pagar(double valor);
     }
 }
