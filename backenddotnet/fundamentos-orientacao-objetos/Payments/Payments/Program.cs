@@ -10,6 +10,12 @@
 
     public class Pagamento
     {
+        public Pagamento()
+        {
+            //Criando construtor da classe
+
+        }
+
         //Métodos
         public virtual void Pagar(string numero) { }
         public virtual void Pagar(string numero, int numero2) { }
