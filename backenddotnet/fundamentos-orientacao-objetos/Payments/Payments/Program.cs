@@ -1,37 +1,31 @@
-﻿namespace Payments
+﻿using System;
+
+namespace Payments
 {
     class Program
     {
         static void Main(string[] args)
         {
+            using (var pagamento = new Pagamento())
+            {
+                Console.WriteLine("Processando Pagamento...");
+            }
 
+            Console.WriteLine("Hello World!");
         }
     }
 
-    public class Pagamento
+    public class Pagamento : IDisposable
     {
+
         public Pagamento()
         {
-            //Criando construtor da classe
-
+            Console.WriteLine("Iniciando Pagamento...");
         }
 
-        //Métodos
-        public virtual void Pagar(string numero) { }
-        public virtual void Pagar(string numero, int numero2) { }
-        public virtual void Pagar(string numero, int numero2, int numero3) { }
-    }
-
-    public class PagamentoViaCartão : Pagamento
-    {
-        public override void Pagar(string numero)
+        public void Dispose()
         {
-
+            Console.WriteLine("Finalizando pagamento");
         }
-    }
-
-    public class Endereco
-    {
-        string ZipCode;
     }
 }
