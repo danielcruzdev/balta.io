@@ -7,30 +7,26 @@ namespace Payments
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            var pessoa = new Pessoa();
+
+            pessoa = new PessoaFisica();
+            pessoa = new PessoaJuridica();
         }
     }
 
-    public abstract class Pagamento : IPagamento
+    public class Pessoa
     {
-        public DateTime Vencimento { get; set; }
-        public double Valor { get; set; }
-
-        public virtual void Pagar(double valor)
-        {
-        }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
     }
 
-    public class PagamentoViaBoleto : Pagamento
+    public class PessoaFisica : Pessoa
     {
-        public override void Pagar(double valor)
-        {
-        }
+        public string CPF { get; set; }
     }
 
-    public interface IPagamento
+    public class PessoaJuridica : Pessoa
     {
-        DateTime Vencimento { get; set; }
-        double Valor { get; set; }
-        void Pagar(double valor);
+        public string CNPJ { get; set; }
     }
 }
