@@ -11,7 +11,7 @@ namespace Payments
         }
     }
 
-    public static class Pagamento
+    public sealed class Pagamento
     {
         public static DateTime Vencimento { get; set; }
     }
