@@ -10,14 +10,20 @@ namespace Payments
         }
     }
 
-    public class Pagamento : IPagamento
+    public abstract class Pagamento : IPagamento
     {
         public DateTime Vencimento { get; set; }
         public double Valor { get; set; }
 
-        public void Pagar(double valor)
+        public virtual void Pagar(double valor)
         {
+        }
+    }
 
+    public class PagamentoViaBoleto : Pagamento
+    {
+        public override void Pagar(double valor)
+        {
         }
     }
 
