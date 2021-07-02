@@ -6,26 +6,13 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            using (var pagamento = new Pagamento())
-            {
-                Console.WriteLine("Processando Pagamento...");
-            }
-
+            Pagamento.Vencimento = DateTime.Now;
             Console.WriteLine("Hello World!");
         }
     }
 
-    public class Pagamento : IDisposable
+    public static class Pagamento
     {
-
-        public Pagamento()
-        {
-            Console.WriteLine("Iniciando Pagamento...");
-        }
-
-        public void Dispose()
-        {
-            Console.WriteLine("Finalizando pagamento");
-        }
+        public static DateTime Vencimento { get; set; }
     }
 }
