@@ -7,26 +7,27 @@ namespace Payments
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            var pessoa = new Pessoa();
+            var pessoaA = new Pessoa(1, "Daniel Cruz");
+            var pessoaB = new Pessoa(1, "Daniel Cruz");
 
-            pessoa = new PessoaFisica();
-            pessoa = new PessoaJuridica();
+            Console.WriteLine(pessoaA.Equals(pessoaB));
         }
     }
 
-    public class Pessoa
+    public class Pessoa : IEquatable<Pessoa>
     {
+        public Pessoa(int id, string nome)
+        {
+            Nome = nome;
+            Id = id;
+        }
+
+        public int Id { get; set; }
         public string Nome { get; set; }
-        public string Sobrenome { get; set; }
-    }
 
-    public class PessoaFisica : Pessoa
-    {
-        public string CPF { get; set; }
-    }
-
-    public class PessoaJuridica : Pessoa
-    {
-        public string CNPJ { get; set; }
+        public bool Equals(Pessoa pessoa)
+        {
+            return Id == pessoa.Id;
+        }
     }
 }
