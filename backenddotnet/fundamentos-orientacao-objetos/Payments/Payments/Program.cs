@@ -1,38 +1,16 @@
-﻿namespace Payments
+﻿using System.Collections.Generic;
+
+namespace Payments
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var person = new Person();
-            var context = new DataContext<Person, Payments, Subscription>();
-            context.Save(person);
+            var payments = new List<Payment>();
+            payments.Add(new Payment());
+            payments.Remove()
         }
     }
 
-    public class DataContext<P, PA, S> where P : Person
-                                       where PA : Payments
-                                       where S: Subscription
-    {
-        public void Save(P person)
-        {
-       
-        }
-
-        public void Save(PA payment)
-        {
-
-        }
-
-        public void Save(S subscription)
-        {
-
-        }
-    }
-
-    public class Person { }
-
-    public class Payments { }
-
-    public class Subscription { }
+    public class Payment { }
 }
