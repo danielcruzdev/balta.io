@@ -10,6 +10,7 @@ namespace Projeto1
             var course = new Course();
             course.Title = "Fundamentos do C#";
 
+            Console.WriteLine(course.Id);
             Console.WriteLine(course.Title);
         }
     }

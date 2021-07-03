@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Projeto1.ContentContext
 {
-    public class Content
+    public abstract class Content
     {
-        public int Id { get; set; }
+        public Content()
+        {
+            //SPOF - Ponto único de falha.
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
     }
