@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Payments
@@ -14,7 +13,7 @@ namespace Payments
             payments.Add(new Payment(3));
 
             payments.AsEnumerable();
-            }
+
         }
     }
 
