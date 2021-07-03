@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Payments
 {
@@ -6,31 +6,11 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var payments = new List<Payment>();
+            payments.Add(new Payment());
+            payments.Remove()
         }
     }
 
-    public abstract class Pagamento : IPagamento
-    {
-        public DateTime Vencimento { get; set; }
-        public double Valor { get; set; }
-
-        public virtual void Pagar(double valor)
-        {
-        }
-    }
-
-    public class PagamentoViaBoleto : Pagamento
-    {
-        public override void Pagar(double valor)
-        {
-        }
-    }
-
-    public interface IPagamento
-    {
-        DateTime Vencimento { get; set; }
-        double Valor { get; set; }
-        void Pagar(double valor);
-    }
+    public class Payment { }
 }
