@@ -5,14 +5,26 @@
         static void Main(string[] args)
         {
             var person = new Person();
-            var context = new DataContext<Person>();
+            var context = new DataContext<Person, Payments, Subscription>();
             context.Save(person);
         }
     }
 
-    public class DataContext<T>
+    public class DataContext<P, PA, S> where P : Person
+                                       where PA : Payments
+                                       where S: Subscription
     {
-        public void Save(T entity)
+        public void Save(P person)
+        {
+       
+        }
+
+        public void Save(PA payment)
+        {
+
+        }
+
+        public void Save(S subscription)
         {
 
         }
