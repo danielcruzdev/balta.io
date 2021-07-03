@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projeto1.ContentContext;
+using System;
 
 namespace Projeto1
 {
@@ -6,7 +7,10 @@ namespace Projeto1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var course = new Course();
+            course.Title = "Fundamentos do C#";
+
+            Console.WriteLine(course.Title);
         }
     }
 }
