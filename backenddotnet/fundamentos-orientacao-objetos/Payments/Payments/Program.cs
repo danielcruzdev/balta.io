@@ -6,39 +6,31 @@ namespace Payments
     {
         static void Main(string[] args)
         {
-            var pagamento = new Pagamento();
-            pagamento.DataPagamento2 = DateTime.Now;
+            Console.WriteLine("Hello World!");
         }
     }
 
-    public class Pagamento
+    public abstract class Pagamento : IPagamento
     {
-        //Propriedades 
         public DateTime Vencimento { get; set; }
+        public double Valor { get; set; }
 
-        private DateTime DataPagamento;
-
-        public DateTime DataPagamento2
+        public virtual void Pagar(double valor)
         {
-            get
-            {
-                Console.WriteLine("Lendo Valor");
-                return DataPagamento;
-            }
-            set
-            {
-                Console.WriteLine("Atribuindo Valor");
-                DataPagamento = value;
-            }
         }
-
-
-        //Métodos
-        public void Pagar() { }
     }
 
-    public class Endereco
+    public class PagamentoViaBoleto : Pagamento
     {
-        string ZipCode;
+        public override void Pagar(double valor)
+        {
+        }
+    }
+
+    public interface IPagamento
+    {
+        DateTime Vencimento { get; set; }
+        double Valor { get; set; }
+        void Pagar(double valor);
     }
 }
