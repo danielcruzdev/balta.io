@@ -8,5 +8,6 @@ namespace Projeto1.ContentContext
 {
     public class  Career : Content
     {
+        public int Courses { get; set; }
     }
 }

@@ -8,6 +8,5 @@ namespace Projeto1.ContentContext
 {
     public class Article : Content
     {
-
     }
 }
