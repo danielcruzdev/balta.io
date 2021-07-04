@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace Projeto1.ContentContext
 {
-    public class  Career : Content
+    public class Career : Content
     {
-        public int Courses { get; set; }
+        public Career()
+        {
+            Items = new List<CareerItem>();
+        }
+
+        public IList<CareerItem> Items { get; set; }
+        public int TotalCourses => Items.Count;
+        //Expression Body
     }
 }
