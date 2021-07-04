@@ -11,7 +11,7 @@ namespace Projeto1.ContentContext
         public CareerItem(int order, string title, string description, Course course)
         {
             if (course == null)
-                throw new ArgumentNullException("O curso não pode ser nulo!");
+                
 
             Order = order;
             Title = title;
