@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Projeto1.SharedContext;
+using System.Collections.Generic;
 
 namespace Projeto1.ContentContext
 {
-    public class Module
+    public class Module : Base
     {
         public Module()
         {

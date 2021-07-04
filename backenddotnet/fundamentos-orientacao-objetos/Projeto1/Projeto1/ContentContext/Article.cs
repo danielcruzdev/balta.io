@@ -10,7 +10,5 @@ namespace Projeto1.ContentContext
     public class Article : Content
     {
         public Article(string title, string url) : base(title, url){}
-
-        public List<Notification> MyProperty { get; set; }
     }
 }

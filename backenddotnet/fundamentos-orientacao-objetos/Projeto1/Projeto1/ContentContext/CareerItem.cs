@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Projeto1.NotificationContext;
+using Projeto1.SharedContext;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Projeto1.ContentContext
 {
-    public class CareerItem
+    public class CareerItem : Base
     {
         public CareerItem(int order, string title, string description, Course course)
         {
             if (course == null)
-                
+                AddNotification(new Notification("Course", "Curso inválido!"));
 
             Order = order;
             Title = title;

@@ -32,7 +32,7 @@ namespace Projeto1
             var careers = new List<Career>();
             var careerDotNet = new Career("Especialista .NET", "especialista-dotnet");
 
-            var carrerItem2 = new CareerItem(2, "Aprenda OOP", "", courses[0]);
+            var carrerItem2 = new CareerItem(2, "Aprenda OOP", "", null);
             var carrerItem = new CareerItem(1, "Comece por aqui", "", courses[1]);
             var carrerItem3 = new CareerItem(3, "Aprenda .NET", "", courses[2]);
 
@@ -49,8 +49,13 @@ namespace Projeto1
                 foreach (var item in career.Items.OrderBy(x => x.Order))
                 {
                     Console.WriteLine($"{item.Order} - {item.Title}");
-                    Console.WriteLine(item.Course.Title);
-                    Console.WriteLine(item.Course.Level);
+                    Console.WriteLine(item.Course?.Title);
+                    Console.WriteLine(item.Course?.Level);
+
+                    foreach (var notification in item.Notifications)
+                    {
+                        Console.WriteLine($"{notification.Property} - {notification.Message}");
+                    }
                 }
             }
         }
