@@ -8,10 +8,12 @@ namespace Projeto1.ContentContext
 {
     public abstract class Content
     {
-        public Content()
+        public Content(string title, string url)
         {
             //SPOF - Ponto único de falha.
             Id = Guid.NewGuid();
+            Title = title;
+            Url = url;
         }
 
         public Guid Id { get; set; }
