@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Payments
 {
@@ -7,10 +8,22 @@ namespace Payments
         static void Main(string[] args)
         {
             var payments = new List<Payment>();
-            payments.Add(new Payment());
-            payments.Remove()
+            payments.Add(new Payment(1));
+            payments.Add(new Payment(2));
+            payments.Add(new Payment(3));
+
+            payments.AsEnumerable();
+
         }
     }
 
-    public class Payment { }
+    public class Payment
+    {
+        public Payment(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; set; }
+    }
 }
