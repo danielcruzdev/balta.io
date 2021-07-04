@@ -1,5 +1,6 @@
 ﻿using Projeto1.ContentContext;
 using Projeto1.ContentContext.Enums;
+using Projeto1.SubscriptionContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,10 @@ namespace Projeto1
                     }
                 }
             }
+
+            var payPalSubscription = new PayPalSubscription();
+            var student = new Student();
+            student.CreateSubscription(payPalSubscription);
         }
     }
 }
