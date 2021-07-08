@@ -49,3 +49,4 @@ GO
 
 SELECT a.Id, a.Nome, a.CategoriaId
   FROM Curso a
+ WHERE a.CategoriaId = 1
