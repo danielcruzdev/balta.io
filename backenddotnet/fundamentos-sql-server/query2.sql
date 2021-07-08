@@ -49,4 +49,5 @@ GO
 
 SELECT a.Id, a.Nome, a.CategoriaId
   FROM Curso a
- WHERE a.CategoriaId = 1
+--  WHERE a.CategoriaId = 1
+ORDER BY a.Nome
