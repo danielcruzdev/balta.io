@@ -16,7 +16,7 @@ SELECT a.Id AS CursoId,
 SELECT a.Id, a.Nome
   FROM Curso a
 
-UNION
+UNION ALL
 
 SELECT a.Id, a.Nome
   FROM Categoria a
