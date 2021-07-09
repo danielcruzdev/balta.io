@@ -43,3 +43,7 @@ WHERE a.Id IN (1, 2, 3)
 SELECT a.* 
   FROM Curso a
 WHERE a.Id BETWEEN 2 AND 4
+
+SELECT a.Id   AS Codigo,
+       a.Nome AS Nome
+  FROM Curso a
