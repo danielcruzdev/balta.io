@@ -30,3 +30,16 @@ SELECT AVG(a.Id) AS Media
 
 SELECT SUM(a.Id) AS Soma
   FROM Categoria a
+
+
+SELECT a.* 
+  FROM Curso a
+WHERE a.Nome LIKE '%Fundamentos%'
+
+SELECT a.* 
+  FROM Curso a
+WHERE a.Id IN (1, 2, 3)
+
+SELECT a.* 
+  FROM Curso a
+WHERE a.Id BETWEEN 2 AND 4
