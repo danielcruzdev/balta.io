@@ -20,3 +20,10 @@ UNION ALL
 
 SELECT a.Id, a.Nome
   FROM Categoria a
+
+
+--GROUP BY
+SELECT a.Nome, COUNT(b.CategoriaId) AS Qtde
+  FROM Categoria a
+    JOIN Curso   b ON a.Id = b.CategoriaId
+  GROUP BY b.CategoriaId, a.Nome
