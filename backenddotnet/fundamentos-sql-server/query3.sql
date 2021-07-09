@@ -1,10 +1,16 @@
 SELECT * FROM Categoria
 
-BEGiN TRANSACTION
+BEGIN TRANSACTION
 
 UPDATE a
    SET a.Nome = 'Azure33333'
   FROM Categoria a
  WHERE a.Id = 1
 
+ROLLBACK
+
+BEGIN TRANSACTION
+    DELETE a
+    FROM Categoria a
+    WHERE a.Id = 3
 ROLLBACK
