@@ -4,10 +4,19 @@ SELECT a.Id   AS Codigo,
 
 
 --JOINS
-
 SELECT a.Id AS CursoId,
        a.Nome AS Curso,
        b.Id AS CategoriaId,
        b.Nome AS Categoria
   FROM Curso        a
      JOIN Categoria b ON a.CategoriaId = b.Id
+
+
+--UNION
+SELECT a.Id, a.Nome
+  FROM Curso a
+
+UNION
+
+SELECT a.Id, a.Nome
+  FROM Categoria a
