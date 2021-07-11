@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Dapper;
+using DataAccess.Models;
 using Microsoft.Data.SqlClient;
 
 namespace DataAccess
@@ -11,7 +14,20 @@ namespace DataAccess
 
             using(var connection = new SqlConnection(connectionString))
             {
-                
+                var categories = connection.Query<Category>($@"SELECT * 
+                                                                 FROM Category");
+
+                foreach (var category in categories)
+                {
+                    Console.WriteLine(category.Id);
+                    Console.WriteLine(category.Title);
+                    Console.WriteLine(category.Url);
+                    Console.WriteLine(category.Summary);
+                    Console.WriteLine(category.Order);
+                    Console.WriteLine(category.Description);
+                    Console.WriteLine(category.Featured);
+                    Console.WriteLine("------------------------");
+                }
             }
         }
     }
