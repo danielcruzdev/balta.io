@@ -35,12 +35,5 @@ SELECT a.Nome, COUNT(b.CategoriaId) AS Qtde
 GROUP BY b.CategoriaId, a.Nome
 HAVING COUNT(b.CategoriaId) >= 2
 
---VIEWS 
-CREATE OR ALTER VIEW vwContagemCursosPorCategoria AS
-    SELECT a.Nome, COUNT(b.CategoriaId) AS Qtde
-    FROM Categoria a
-        JOIN Curso   b ON a.Id = b.CategoriaId
-    GROUP BY b.CategoriaId, a.Nome
-    HAVING COUNT(b.CategoriaId) >= 2
 
 SELECT * FROM  vwContagemCursosPorCategoria
