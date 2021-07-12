@@ -14,11 +14,11 @@ namespace DataAccess
 
             var category = new Category()
             {
-                Id = new Guid("8618e919-60e4-429e-b468-79c7fc0f4151"),
+                Id = Guid.NewGuid(),
                 Title = "Google Cloud",
                 Url = "cloud",
                 Description = "Categoria destinada a serviços Google Cloud",
-                Order = 10,
+                Order = 9,
                 Summary = "Google Cloud",
                 Featured = true
             };
@@ -27,21 +27,23 @@ namespace DataAccess
             using (var connection = new SqlConnection(connectionString))
             {
                 ListCategories(connection);
-                //CreateCategory(connection, category);
+                CreateCategory(connection, category);
                 UpdateCategory(connection, category);
+                //DeleteCategory(connection, category.Id);
             }
         }
 
-        static void DeleteCategory(SqlConnection connection, Category category)
+        static void DeleteCategory(SqlConnection connection, Guid categoryId)
         {
-            var parameters = GetParameters(category);
 
             var deleteSql = @"
-                    DELETE a 
-                      FROM Category
-                     WHERE a.Id = @Id";
+                    DELETE FROM [Category]
+                     WHERE [Id] = @Id";
 
-            var rows = connection.Execute(deleteSql, parameters);
+            var rows = connection.Execute(deleteSql, new
+            {
+                Id = categoryId
+            });
 
             Console.WriteLine($"Linhas deletadas - {rows}");
         }
@@ -51,15 +53,14 @@ namespace DataAccess
             var parameters = GetParameters(category);
 
             var updateSql = @"
-                    UPDATE a 
-                       SET a.Title = @Title,
-                           a.Url = @Url,
-                           a.Description = @Description,
-                           a.Order = @Order,
-                           a.Summary = @Summary,
-                           a.Featured = @Featured
-                      FROM Category a
-                     WHERE a.Id = @Id";
+                    UPDATE [Category]
+                       SET [Title] = @Title,
+                           [Url] = @Url,
+                           [Description] = @Description,
+                           [Order] = @Order,
+                           [Summary] = @Summary,
+                           [Featured] = @Featured
+                     WHERE [Id] = @Id";
 
             var rows = connection.Execute(updateSql, parameters);
 
