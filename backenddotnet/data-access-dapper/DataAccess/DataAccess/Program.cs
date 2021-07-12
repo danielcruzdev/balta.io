@@ -28,10 +28,10 @@ namespace DataAccess
             parameters.Add("@Id", category.Id, DbType.Guid);
             parameters.Add("@Title", category.Title, DbType.String);
             parameters.Add("@Url", category.Url, DbType.String);
-            parameters.Add("@Description", category.Id, DbType.String);
-            parameters.Add("@Order", category.Id, DbType.Int32);
-            parameters.Add("@Summary", category.Id, DbType.String);
-            parameters.Add("@Featured", category.Id, DbType.Boolean);
+            parameters.Add("@Description", category.Description, DbType.String);
+            parameters.Add("@Order", category.Order, DbType.Int32);
+            parameters.Add("@Summary", category.Summary, DbType.String);
+            parameters.Add("@Featured", category.Featured, DbType.Boolean);
             
             var insertSql = @"
              INSERT INTO Category 
@@ -39,7 +39,8 @@ namespace DataAccess
 
             using(var connection = new SqlConnection(connectionString))
             {
-                connection.Execute(insertSql);
+                var rows = connection.Execute(insertSql, parameters);  
+                Console.WriteLine($"Linhas inseridas - {rows}");
 
                 var categories = connection.Query<Category>($@"SELECT * 
                                                                  FROM Category");
