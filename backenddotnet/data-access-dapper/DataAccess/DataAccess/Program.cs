@@ -47,7 +47,8 @@ namespace DataAccess
                 //CreateCategory(connection, category);
                 //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
-                ExecuteScalar(connection, category);
+                //ExecuteScalar(connection, category);
+                ExecuteReadView(connection);
             }
         }
 
@@ -160,6 +161,19 @@ namespace DataAccess
             var parametros = new { CategoryId = "09ce0b7b-cfca-497b-92c0-3290ad9d5142" };
 
             var courses = connection.Query("spGetCoursesByCategory", parametros, commandType: CommandType.StoredProcedure);
+
+            foreach (var item in courses)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Title);
+                Console.WriteLine("------------------");
+            }
+        }
+        static void ExecuteReadView(SqlConnection connection)
+        {
+            var sqlView = "SELECT * FROM [vwCourses]";
+
+            var courses = connection.Query(sqlView, commandType: CommandType.Text);
 
             foreach (var item in courses)
             {
