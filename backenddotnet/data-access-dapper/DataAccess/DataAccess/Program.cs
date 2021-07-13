@@ -16,11 +16,11 @@ namespace DataAccess
             var category = new Category()
             {
                 Id = Guid.NewGuid(),
-                Title = "Google Cloud",
-                Url = "cloud",
-                Description = "Categoria destinada a serviços Google Cloud",
-                Order = 9,
-                Summary = "Google Cloud",
+                Title = "Google Cloud333333",
+                Url = "cloud333333",
+                Description = "Categoria destinada a serviços Google Cloud3333333",
+                Order = 12,
+                Summary = "Google Clou333333333333",
                 Featured = true
             };
 
@@ -41,12 +41,13 @@ namespace DataAccess
 
             using (var connection = new SqlConnection(connectionString))
             {
-                ListCategories(connection);
-                ExecuteProcedure(connection);
+                //ListCategories(connection);
+                //ExecuteReadProcedure(connection);
                 //CreateManyCategory(connection, categories);
                 //CreateCategory(connection, category);
                 //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
+                ExecuteScalar(connection, category);
             }
         }
 
@@ -97,6 +98,20 @@ namespace DataAccess
             Console.WriteLine($"Linhas inseridas - {rows}");
         }
 
+        static void ExecuteScalar(SqlConnection connection, Category category)
+        {
+            var parameters = GetParameters(category);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         OUTPUT inserted.Id
+                         VALUES (NEWID(), @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            var id = connection.ExecuteScalar<Guid>(insertSql, parameters);
+
+            Console.WriteLine($"ID da categoria inserida - {id}");
+        }
+
         static void CreateManyCategory(SqlConnection connection, List<Category> categories)
         {
             var parameters = new List<DynamicParameters>();
@@ -140,10 +155,23 @@ namespace DataAccess
             connection.Execute("spDeleteStudent", parametros, commandType: CommandType.StoredProcedure);
         }
 
+        static void ExecuteReadProcedure(SqlConnection connection)
+        {
+            var parametros = new { CategoryId = "09ce0b7b-cfca-497b-92c0-3290ad9d5142" };
+
+            var courses = connection.Query("spGetCoursesByCategory", parametros, commandType: CommandType.StoredProcedure);
+
+            foreach (var item in courses)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Title);
+                Console.WriteLine("------------------");
+            }
+        }
+
         static DynamicParameters GetParameters(Category category)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", category.Id, DbType.Guid);
             parameters.Add("@Title", category.Title, DbType.String);
             parameters.Add("@Url", category.Url, DbType.String);
             parameters.Add("@Description", category.Description, DbType.String);
