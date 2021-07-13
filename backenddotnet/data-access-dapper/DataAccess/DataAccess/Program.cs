@@ -41,8 +41,9 @@ namespace DataAccess
 
             using (var connection = new SqlConnection(connectionString))
             {
-                CreateManyCategory(connection, categories);
                 ListCategories(connection);
+                ExecuteProcedure(connection);
+                //CreateManyCategory(connection, categories);
                 //CreateCategory(connection, category);
                 //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
@@ -130,6 +131,13 @@ namespace DataAccess
                 Console.WriteLine(item.Featured);
                 Console.WriteLine("------------------------");
             }
+        }
+
+        static void ExecuteProcedure(SqlConnection connection)
+        {
+            var parametros = new { StudentId = "79b82071-80a8-4e78-a79c-92c8cd1fd052" };
+
+            connection.Execute("spDeleteStudent", parametros, commandType: CommandType.StoredProcedure);
         }
 
         static DynamicParameters GetParameters(Category category)
