@@ -2,6 +2,7 @@
 using DataAccess.Models;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace DataAccess
@@ -15,21 +16,40 @@ namespace DataAccess
             var category = new Category()
             {
                 Id = Guid.NewGuid(),
-                Title = "Google Cloud",
-                Url = "cloud",
-                Description = "Categoria destinada a serviços Google Cloud",
-                Order = 9,
-                Summary = "Google Cloud",
+                Title = "Google Cloud333333",
+                Url = "cloud333333",
+                Description = "Categoria destinada a serviços Google Cloud3333333",
+                Order = 12,
+                Summary = "Google Clou333333333333",
                 Featured = true
             };
 
+            var category2 = new Category()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Google Cloud2",
+                Url = "cloud2",
+                Description = "Categoria destinada a serviços Google Cloud2",
+                Order = 10,
+                Summary = "Google Cloud2",
+                Featured = true
+            };
+
+            var categories = new List<Category>();
+            categories.Add(category);
+            categories.Add(category2);
 
             using (var connection = new SqlConnection(connectionString))
             {
-                ListCategories(connection);
-                CreateCategory(connection, category);
-                UpdateCategory(connection, category);
+                //ListCategories(connection);
+                //ExecuteReadProcedure(connection);
+                //CreateManyCategory(connection, categories);
+                //CreateCategory(connection, category);
+                //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
+                //ExecuteScalar(connection, category);
+                //ExecuteReadView(connection);
+                OneToOne(connection);
             }
         }
 
@@ -80,6 +100,38 @@ namespace DataAccess
             Console.WriteLine($"Linhas inseridas - {rows}");
         }
 
+        static void ExecuteScalar(SqlConnection connection, Category category)
+        {
+            var parameters = GetParameters(category);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         OUTPUT inserted.Id
+                         VALUES (NEWID(), @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            var id = connection.ExecuteScalar<Guid>(insertSql, parameters);
+
+            Console.WriteLine($"ID da categoria inserida - {id}");
+        }
+
+        static void CreateManyCategory(SqlConnection connection, List<Category> categories)
+        {
+            var parameters = new List<DynamicParameters>();
+            var parameter = GetParameters(categories[0]);
+            var parameter2 = GetParameters(categories[1]);
+
+            parameters.Add(parameter);
+            parameters.Add(parameter2);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         VALUES (@Id, @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            var rows = connection.Execute(insertSql, parameters);
+
+            Console.WriteLine($"Linhas inseridas - {rows}");
+        }
+
         static void ListCategories(SqlConnection connection)
         {
             var categories = connection.Query<Category>($@"SELECT * 
@@ -98,10 +150,62 @@ namespace DataAccess
             }
         }
 
+        static void ExecuteProcedure(SqlConnection connection)
+        {
+            var parametros = new { StudentId = "79b82071-80a8-4e78-a79c-92c8cd1fd052" };
+
+            connection.Execute("spDeleteStudent", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        static void ExecuteReadProcedure(SqlConnection connection)
+        {
+            var parametros = new { CategoryId = "09ce0b7b-cfca-497b-92c0-3290ad9d5142" };
+
+            var courses = connection.Query("spGetCoursesByCategory", parametros, commandType: CommandType.StoredProcedure);
+
+            foreach (var item in courses)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Title);
+                Console.WriteLine("------------------");
+            }
+        }
+
+        static void ExecuteReadView(SqlConnection connection)
+        {
+            var sqlView = "SELECT * FROM [vwCourses]";
+
+            var courses = connection.Query(sqlView, commandType: CommandType.Text);
+
+            foreach (var item in courses)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Title);
+                Console.WriteLine("------------------");
+            }
+        }
+
+        static void OneToOne(SqlConnection connection)
+        {
+            var sql = @"SELECT * 
+                          FROM [CareerItem] 
+                      INNER JOIN [Course] ON [CareerItem].[CourseId] = [Course].[Id]";
+
+            var itens = connection.Query<CarrerItem, Course, CarrerItem>(sql, (carrerItem, course) =>
+            {
+                carrerItem.Course = course;
+                return carrerItem;
+            }, splitOn: "Id");
+
+            foreach (var item in itens)
+            {
+                Console.WriteLine(item.Course.Title);
+            }
+        }
+
         static DynamicParameters GetParameters(Category category)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", category.Id, DbType.Guid);
             parameters.Add("@Title", category.Title, DbType.String);
             parameters.Add("@Url", category.Url, DbType.String);
             parameters.Add("@Description", category.Description, DbType.String);
