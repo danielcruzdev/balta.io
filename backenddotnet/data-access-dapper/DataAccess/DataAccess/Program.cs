@@ -2,6 +2,7 @@
 using DataAccess.Models;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace DataAccess
@@ -23,12 +24,27 @@ namespace DataAccess
                 Featured = true
             };
 
+            var category2 = new Category()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Google Cloud2",
+                Url = "cloud2",
+                Description = "Categoria destinada a serviços Google Cloud2",
+                Order = 10,
+                Summary = "Google Cloud2",
+                Featured = true
+            };
+
+            var categories = new List<Category>();
+            categories.Add(category);
+            categories.Add(category2);
 
             using (var connection = new SqlConnection(connectionString))
             {
+                CreateManyCategory(connection, categories);
                 ListCategories(connection);
-                CreateCategory(connection, category);
-                UpdateCategory(connection, category);
+                //CreateCategory(connection, category);
+                //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
             }
         }
@@ -70,6 +86,24 @@ namespace DataAccess
         static void CreateCategory(SqlConnection connection, Category category)
         {
             var parameters = GetParameters(category);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         VALUES (@Id, @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            var rows = connection.Execute(insertSql, parameters);
+
+            Console.WriteLine($"Linhas inseridas - {rows}");
+        }
+
+        static void CreateManyCategory(SqlConnection connection, List<Category> categories)
+        {
+            var parameters = new List<DynamicParameters>();
+            var parameter = GetParameters(categories[0]);
+            var parameter2 = GetParameters(categories[1]);
+
+            parameters.Add(parameter);
+            parameters.Add(parameter2);
 
             var insertSql = @"
                     INSERT INTO Category 
