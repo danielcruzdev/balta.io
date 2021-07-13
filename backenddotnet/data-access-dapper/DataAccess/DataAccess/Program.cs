@@ -48,7 +48,8 @@ namespace DataAccess
                 //UpdateCategory(connection, category);
                 //DeleteCategory(connection, category.Id);
                 //ExecuteScalar(connection, category);
-                ExecuteReadView(connection);
+                //ExecuteReadView(connection);
+                OneToOne(connection);
             }
         }
 
@@ -169,6 +170,7 @@ namespace DataAccess
                 Console.WriteLine("------------------");
             }
         }
+
         static void ExecuteReadView(SqlConnection connection)
         {
             var sqlView = "SELECT * FROM [vwCourses]";
@@ -180,6 +182,24 @@ namespace DataAccess
                 Console.WriteLine(item.Id);
                 Console.WriteLine(item.Title);
                 Console.WriteLine("------------------");
+            }
+        }
+
+        static void OneToOne(SqlConnection connection)
+        {
+            var sql = @"SELECT * 
+                          FROM [CareerItem] 
+                      INNER JOIN [Course] ON [CareerItem].[CourseId] = [Course].[Id]";
+
+            var itens = connection.Query<CarrerItem, Course, CarrerItem>(sql, (carrerItem, course) =>
+            {
+                carrerItem.Course = course;
+                return carrerItem;
+            }, splitOn: "Id");
+
+            foreach (var item in itens)
+            {
+                Console.WriteLine(item.Course.Title);
             }
         }
 
