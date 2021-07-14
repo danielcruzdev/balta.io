@@ -51,7 +51,8 @@ namespace DataAccess
                 //ExecuteScalar(connection, category);
                 //ExecuteReadView(connection);
                 //OneToOne(connection);
-                OneToMany(connection);
+                //OneToMany(connection);
+                QueryMultiple(connection);
             }
         }
 
@@ -245,6 +246,34 @@ namespace DataAccess
                 }
 
                 Console.WriteLine("-------------------------");
+            }
+        }
+
+        static void QueryMultiple(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Category;
+                          SELECT * FROM Course";
+
+            using (var multi = connection.QueryMultiple(query))
+            {
+                var categories = multi.Read<Category>();
+                var courses = multi.Read<Course>();
+
+                Console.WriteLine("Categorias");
+                foreach (var item in categories)
+                {
+                    Console.WriteLine(item.Title);
+                }
+                Console.WriteLine("---------------------");
+
+                Console.WriteLine();
+
+                Console.WriteLine("Cursos");
+                foreach (var item in courses)
+                {
+                    Console.WriteLine(item.Title);
+                }
+                Console.WriteLine("---------------------");
             }
         }
 
