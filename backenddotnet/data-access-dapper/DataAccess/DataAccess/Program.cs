@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace DataAccess
 {
@@ -49,7 +50,11 @@ namespace DataAccess
                 //DeleteCategory(connection, category.Id);
                 //ExecuteScalar(connection, category);
                 //ExecuteReadView(connection);
-                OneToOne(connection);
+                //OneToOne(connection);
+                //OneToMany(connection);
+                //QueryMultiple(connection);
+                //SelectIn(connection);
+                //Like(connection);
             }
         }
 
@@ -191,7 +196,7 @@ namespace DataAccess
                           FROM [CareerItem] 
                       INNER JOIN [Course] ON [CareerItem].[CourseId] = [Course].[Id]";
 
-            var itens = connection.Query<CarrerItem, Course, CarrerItem>(sql, (carrerItem, course) =>
+            var itens = connection.Query<CareerItem, Course, CareerItem>(sql, (carrerItem, course) =>
             {
                 carrerItem.Course = course;
                 return carrerItem;
@@ -201,6 +206,132 @@ namespace DataAccess
             {
                 Console.WriteLine(item.Course.Title);
             }
+        }
+
+        static void OneToMany(SqlConnection connection)
+        {
+            var sql = @"SELECT [Career].[Id],
+                               [Career].[Title],
+                               [CareerItem].[CareerId],
+                               [CareerItem].[Title]
+                          FROM [Career] 
+                      INNER JOIN [CareerItem] ON [CareerItem].[CareerId] = [Career].[Id]
+                       ORDER BY [Career].[Title]";
+
+            var careers = new List<Career>();
+
+            var items = connection.Query<Career, CareerItem, Career>(sql, (career, careerItem) =>
+            {
+
+                var car = careers.Where(x => x.Id == career.Id).FirstOrDefault();
+
+                if (car == null)
+                {
+                    car = career;
+                    car.Items.Add(careerItem);
+                    careers.Add(car);
+                }
+                else
+                {
+                    car.Items.Add(careerItem);
+                }
+
+                return career;
+            }, splitOn: "CareerId");
+
+            foreach (var career in careers)
+            {
+                Console.WriteLine(career.Title);
+                foreach (var careerItem in career.Items)
+                {
+                    Console.WriteLine(careerItem.Title);
+                }
+
+                Console.WriteLine("-------------------------");
+            }
+        }
+
+        static void QueryMultiple(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Category;
+                          SELECT * FROM Course";
+
+            using (var multi = connection.QueryMultiple(query))
+            {
+                var categories = multi.Read<Category>();
+                var courses = multi.Read<Course>();
+
+                Console.WriteLine("Categorias");
+                foreach (var item in categories)
+                {
+                    Console.WriteLine(item.Title);
+                }
+                Console.WriteLine("---------------------");
+
+                Console.WriteLine();
+
+                Console.WriteLine("Cursos");
+                foreach (var item in courses)
+                {
+                    Console.WriteLine(item.Title);
+                }
+                Console.WriteLine("---------------------");
+            }
+        }
+
+        static void SelectIn(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Career WHERE [Id] IN @Id";
+
+            var items = connection.Query<Career>(query, new
+            {
+                Id = new[]
+                {
+                    "01ae8a85-b4e8-4194-a0f1-1c6190af54cb",
+                    "92d7e864-bea5-4812-80cc-c2f4e94db1af"
+                }
+            });
+
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.Title);
+            }
+        }
+
+        static void Like(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Course WHERE [Title] LIKE @Exp";
+
+            var items = connection.Query<Career>(query, new
+            {
+                Exp = "%C#%"
+            });
+
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.Title);
+            }
+        }
+
+        static void Transaction(SqlConnection connection, Category category)
+        {
+            var parameters = GetParameters(category);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         VALUES (@Id, @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            int rows;
+            using (var transaction = connection.BeginTransaction())
+            {
+                rows = connection.Execute(insertSql, parameters, transaction);
+
+                transaction.Commit();
+            }
+
+            Console.WriteLine($"Linhas inseridas - {rows}");
         }
 
         static DynamicParameters GetParameters(Category category)

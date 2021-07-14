@@ -2,7 +2,7 @@
 
 namespace DataAccess.Models
 {
-    public class CarrerItem
+    public class CareerItem
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
