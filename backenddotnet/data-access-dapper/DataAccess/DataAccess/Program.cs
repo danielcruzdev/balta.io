@@ -54,7 +54,7 @@ namespace DataAccess
                 //OneToMany(connection);
                 //QueryMultiple(connection);
                 //SelectIn(connection);
-                Like(connection);
+                //Like(connection);
             }
         }
 
@@ -313,6 +313,25 @@ namespace DataAccess
             {
                 Console.WriteLine(item.Title);
             }
+        }
+
+        static void Transaction(SqlConnection connection, Category category)
+        {
+            var parameters = GetParameters(category);
+
+            var insertSql = @"
+                    INSERT INTO Category 
+                         VALUES (@Id, @Title, @Url, @Description, @Order, @Summary, @Featured)";
+
+            int rows;
+            using (var transaction = connection.BeginTransaction())
+            {
+                rows = connection.Execute(insertSql, parameters, transaction);
+
+                transaction.Commit();
+            }
+
+            Console.WriteLine($"Linhas inseridas - {rows}");
         }
 
         static DynamicParameters GetParameters(Category category)
