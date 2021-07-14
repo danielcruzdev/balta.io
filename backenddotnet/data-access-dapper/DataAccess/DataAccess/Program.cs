@@ -52,7 +52,9 @@ namespace DataAccess
                 //ExecuteReadView(connection);
                 //OneToOne(connection);
                 //OneToMany(connection);
-                QueryMultiple(connection);
+                //QueryMultiple(connection);
+                //SelectIn(connection);
+                Like(connection);
             }
         }
 
@@ -274,6 +276,42 @@ namespace DataAccess
                     Console.WriteLine(item.Title);
                 }
                 Console.WriteLine("---------------------");
+            }
+        }
+
+        static void SelectIn(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Career WHERE [Id] IN @Id";
+
+            var items = connection.Query<Career>(query, new
+            {
+                Id = new[]
+                {
+                    "01ae8a85-b4e8-4194-a0f1-1c6190af54cb",
+                    "92d7e864-bea5-4812-80cc-c2f4e94db1af"
+                }
+            });
+
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.Title);
+            }
+        }
+
+        static void Like(SqlConnection connection)
+        {
+            var query = @"SELECT * FROM Course WHERE [Title] LIKE @Exp";
+
+            var items = connection.Query<Career>(query, new
+            {
+                Exp = "%C#%"
+            });
+
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.Title);
             }
         }
 
