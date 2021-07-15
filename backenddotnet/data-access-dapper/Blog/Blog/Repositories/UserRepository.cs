@@ -1,46 +1,31 @@
 ﻿using Blog.Models;
-using Blog.Repositories;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
-using System;
+using System.Collections.Generic;
 
-namespace Blog
+namespace Blog.Repositories
 {
-    class Program
+    public class UserRepository
     {
         private const string CONNECTION_STRING = "Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
 
-        static void Main(string[] args)
-        {
-            //CreateUser();
-            //UpdateUser();
-            //DeleteUser(2);
-            ReadUsers();
-            //ReadUser(1);
-        }
-
-        public static void ReadUsers()
-        {
-            var repository = new UserRepository();
-            var users = repository.GetAll();
-
-            foreach (var user in users)
-            {
-                Console.WriteLine($"Usuário: {user.Name}");
-            }
-        }
-
-        public static void ReadUser(int userId)
+        public IEnumerable<User> GetAll()
         {
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
-                var user = connection.Get<User>(userId);
-
-                Console.WriteLine($"Usuário: {user.Name}");
+                return connection.GetAll<User>();
             }
         }
 
-        public static void CreateUser()
+        public static User ReadOne(int userId)
+        {
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                return connection.Get<User>(userId);
+            }
+        }
+
+        public static long Create()
         {
             var user = new User()
             {
@@ -54,13 +39,11 @@ namespace Blog
 
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
-                var row = connection.Insert<User>(user);
-
-                Console.WriteLine($"Cadastro realizado com sucesso!");
+                return connection.Insert<User>(user);
             }
         }
 
-        public static void UpdateUser()
+        public static bool Update()
         {
             var user = new User()
             {
@@ -75,20 +58,16 @@ namespace Blog
 
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
-                var row = connection.Update(user);
-
-                Console.WriteLine($"Atualização realizada com sucesso!");
+                return connection.Update(user);
             }
         }
 
-        public static void DeleteUser(int userId)
+        public static bool Delete(int userId)
         {
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
                 var user = connection.Get<User>(userId);
-                var row = connection.Delete(user);
-
-                Console.WriteLine($"Exclusão realizada com sucesso!");
+                return connection.Delete(user);
             }
         }
     }
