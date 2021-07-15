@@ -7,14 +7,15 @@ namespace Blog.Repositories
 {
     public class UserRepository
     {
-        private const string CONNECTION_STRING = "Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
-        private SqlConnection _connection = new SqlConnection(CONNECTION_STRING);
+        public UserRepository(SqlConnection connection) => _connection = connection;
+
+        private readonly SqlConnection _connection;
 
         public IEnumerable<User> GetAll() => _connection.GetAll<User>();
 
-        public User ReadOne(int userId) => _connection.Get<User>(userId);
+        public User GetOneById(int userId) => _connection.Get<User>(userId);
 
-        public void Create(User user) => _connection.Insert<User>(user);
+        public void Create(User user) => _connection.Insert(user);
 
         public void Update(User user) => _connection.Update(user);
 
