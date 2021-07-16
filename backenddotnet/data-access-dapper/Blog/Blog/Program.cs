@@ -73,7 +73,7 @@ namespace Blog
             foreach (var user in users)
             {
                 Console.WriteLine(user.Email);
-                foreach (var role in user.Roles) Console.WriteLine($" - {role.Slug}");
+                foreach (var role in user.Roles) Console.WriteLine($" - {role?.Slug}");
             }
         }
     }
