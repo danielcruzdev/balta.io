@@ -2,6 +2,8 @@
 using Blog.Repositories;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Blog
 {
@@ -12,67 +14,38 @@ namespace Blog
         static void Main(string[] args)
         {
             using var connection = new SqlConnection(CONNECTION_STRING);
-            var categoryRepository = new Repository<Category>(connection);
-            var tagRepository = new Repository<Tag>(connection);
-            var postRepository = new Repository<Post>(connection);
-            var postTagRepository = new Repository<PostTag>(connection);
+            var userRepository = new UserRepository(connection);
 
+            var users = ListUsersWithRoles(userRepository);
 
-            var category = new Category()
+            foreach (var user in users)
             {
-                Name = "Categoria - Desafio2",
-                Slug = "categoria-desafio2"
-            };
+                Console.WriteLine($"Nome: {user.Name}");
+                Console.WriteLine($"Email: {user.Email}");
 
-            var tag = new Tag()
-            {
-                Name = "Tag - desafio2",
-                Slug = "tag-desafio2"
-            };
-
-            var post = new Post()
-            {
-                AuthorId = 1,
-                CategoryId = 1,
-                CreateDate = DateTime.Now,
-                LastUpdateDate = DateTime.Now,
-                Body = "Body - desafio - post2",
-                Slug = "desafio-post2",
-                Summary = "sumarry - post2",
-                Title = "post desafio2",
-            };
-
-            CreateCategory(categoryRepository, category);
-            var tagId = CreateTag(tagRepository, tag);
-            var postId = CreatePost(postRepository, post);
-
-            var postTag = new PostTag()
-            {
-                PostId = (int)postId,
-                TagId = (int)tagId
-            };
-
-            LinkPostToTag(postTagRepository, postTag);
+                if (user.Roles.Count() > 0 && user.Roles[0] != null)
+                {
+                    Console.Write($"Roles: ");
+                    for (int i = 0; i < user.Roles.Count; i++)
+                    {
+                        if (i < (user.Roles.Count - 1))
+                            Console.Write($"{user.Roles[i]?.Name}, ");
+                        else
+                            Console.Write($"{user.Roles[i]?.Name}");
+                    }
+                    Console.WriteLine("\n---------------------");
+                }
+                else
+                {
+                    Console.WriteLine($"Usuário sem role!");
+                    Console.WriteLine("---------------------");
+                }
+            }
         }
 
-        private static long CreateCategory(Repository<Category> repository, Category category)
+        private static IEnumerable<User> ListUsersWithRoles(UserRepository userRepository)
         {
-            return repository.Create(category);
-        }
-
-        private static long CreateTag(Repository<Tag> repository, Tag tag)
-        {
-            return repository.Create(tag);
-        }
-
-        private static long CreatePost(Repository<Post> repository, Post post)
-        {
-            return repository.Create(post);
-        }
-
-        private static long LinkPostToTag(Repository<PostTag> repository, PostTag postTag)
-        {
-            return repository.Create(postTag);
+            return userRepository.ReadWithRole();
         }
     }
 }
