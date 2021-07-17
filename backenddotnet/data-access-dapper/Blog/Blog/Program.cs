@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using Blog.Repositories;
 using Microsoft.Data.SqlClient;
+using System;
 
 namespace Blog
 {
@@ -11,47 +12,67 @@ namespace Blog
         static void Main(string[] args)
         {
             using var connection = new SqlConnection(CONNECTION_STRING);
-            var userRepository = new Repository<User>(connection);
-            var roleRepository = new Repository<Role>(connection);
-            var userRoleRepository = new Repository<UserRole>(connection);
+            var categoryRepository = new Repository<Category>(connection);
+            var tagRepository = new Repository<Tag>(connection);
+            var postRepository = new Repository<Post>(connection);
+            var postTagRepository = new Repository<PostTag>(connection);
 
-            var user = new User()
+
+            var category = new Category()
             {
-                Name = "Usuário Desafio2",
-                Bio = "Bio - Usuário Desafio2",
-                Email = "desafio2@usuario.com.br",
-                Image = "https://...",
-                PasswordHash = "HASH",
-                Slug = "usuario-desafio2"
+                Name = "Categoria - Desafio2",
+                Slug = "categoria-desafio2"
             };
 
-            var role = new Role()
+            var tag = new Tag()
             {
-                Name = "Teste",
-                Slug = "teste"
+                Name = "Tag - desafio2",
+                Slug = "tag-desafio2"
             };
 
-            var userId = CreateUser(userRepository, user);
+            var post = new Post()
+            {
+                AuthorId = 1,
+                CategoryId = 1,
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now,
+                Body = "Body - desafio - post2",
+                Slug = "desafio-post2",
+                Summary = "sumarry - post2",
+                Title = "post desafio2",
+            };
 
-            var userRole = new UserRole { RoleId = 1, UserId = (int)userId };
+            CreateCategory(categoryRepository, category);
+            var tagId = CreateTag(tagRepository, tag);
+            var postId = CreatePost(postRepository, post);
 
-            LinkUserToRole(userRoleRepository, userRole);
-            //CreateRole(roleRepository, role);
+            var postTag = new PostTag()
+            {
+                PostId = (int)postId,
+                TagId = (int)tagId
+            };
+
+            LinkPostToTag(postTagRepository, postTag);
         }
 
-        private static long CreateUser(Repository<User> repository, User user)
+        private static long CreateCategory(Repository<Category> repository, Category category)
         {
-            return repository.Create(user);
+            return repository.Create(category);
         }
 
-        private static long CreateRole(Repository<Role> repository, Role role)
+        private static long CreateTag(Repository<Tag> repository, Tag tag)
         {
-            return repository.Create(role);
+            return repository.Create(tag);
         }
 
-        private static long LinkUserToRole(Repository<UserRole> repository, UserRole userRole)
+        private static long CreatePost(Repository<Post> repository, Post post)
         {
-            return repository.Create(userRole);
+            return repository.Create(post);
+        }
+
+        private static long LinkPostToTag(Repository<PostTag> repository, PostTag postTag)
+        {
+            return repository.Create(postTag);
         }
     }
 }
