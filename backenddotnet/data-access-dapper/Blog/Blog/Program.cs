@@ -12,16 +12,17 @@ namespace Blog
         {
             using var connection = new SqlConnection(CONNECTION_STRING);
             var userRepository = new Repository<User>(connection);
-            var repository = new Repository<Role>(connection);
+            var roleRepository = new Repository<Role>(connection);
+            var userRoleRepository = new Repository<UserRole>(connection);
 
             var user = new User()
             {
-                Name = "Usuário Desafio",
-                Bio = "Bio - Usuário Desafio",
-                Email = "desafio@usuario.com.br",
+                Name = "Usuário Desafio2",
+                Bio = "Bio - Usuário Desafio2",
+                Email = "desafio2@usuario.com.br",
                 Image = "https://...",
                 PasswordHash = "HASH",
-                Slug = "usuario-desafio"
+                Slug = "usuario-desafio2"
             };
 
             var role = new Role()
@@ -31,7 +32,11 @@ namespace Blog
             };
 
             var userId = CreateUser(userRepository, user);
-            //CreateRole(repository, role);
+
+            var userRole = new UserRole { RoleId = 1, UserId = (int)userId };
+
+            LinkUserToRole(userRoleRepository, userRole);
+            //CreateRole(roleRepository, role);
         }
 
         private static long CreateUser(Repository<User> repository, User user)
