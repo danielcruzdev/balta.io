@@ -1,24 +1,35 @@
 ﻿using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Blog.Repositories
 {
-    public class Repository<TModel> where TModel : class
+    public class Repository<T> where T : class
     {
         private readonly SqlConnection _connection;
 
-        public Repository(SqlConnection connection) => _connection = connection;
+        public Repository(SqlConnection connection)
+            => _connection = connection;
 
-        public long Create(TModel model) => _connection.Insert(model);
+        public IEnumerable<T> Get()
+            => _connection.GetAll<T>();
 
-        public List<TModel> Read() => _connection.GetAll<TModel>().ToList();
+        public T Get(int id)
+            => _connection.Get<T>(id);
 
-        public TModel Read(int id) => _connection.Get<TModel>(id);
+        public void Create(T model)
+            => _connection.Insert<T>(model);
 
-        public void Update(TModel model) => _connection.Update(model);
+        public void Update(T model)
+            => _connection.Update<T>(model);
 
-        public void Delete(TModel model) => _connection.Delete(model);
+        public void Delete(T model)
+            => _connection.Delete<T>(model);
+
+        public void Delete(int id)
+        {
+            var model = _connection.Get<T>(id);
+            _connection.Delete<T>(model);
+        }
     }
 }

@@ -1,51 +1,49 @@
-﻿using Blog.Models;
-using Blog.Repositories;
+﻿using Blog.Screens.TagScreens;
 using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Blog
 {
-    public class Program
+    class Program
     {
-        private const string CONNECTION_STRING = "Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
+        private const string CONNECTION_STRING = @"Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
 
         static void Main(string[] args)
         {
-            using var connection = new SqlConnection(CONNECTION_STRING);
-            var userRepository = new UserRepository(connection);
+            Database.Connection = new SqlConnection(CONNECTION_STRING);
+            Database.Connection.Open();
 
-            var users = ListUsersWithRoles(userRepository);
+            Load();
 
-            foreach (var user in users)
-            {
-                Console.WriteLine($"Nome: {user.Name}");
-                Console.WriteLine($"Email: {user.Email}");
-
-                if (user.Roles.Count() > 0 && user.Roles[0] != null)
-                {
-                    Console.Write($"Roles: ");
-                    for (int i = 0; i < user.Roles.Count; i++)
-                    {
-                        if (i < (user.Roles.Count - 1))
-                            Console.Write($"{user.Roles[i]?.Name}, ");
-                        else
-                            Console.Write($"{user.Roles[i]?.Name}");
-                    }
-                    Console.WriteLine("\n---------------------");
-                }
-                else
-                {
-                    Console.WriteLine($"Usuário sem role!");
-                    Console.WriteLine("---------------------");
-                }
-            }
+            Console.ReadKey();
+            Database.Connection.Close();
         }
 
-        private static IEnumerable<User> ListUsersWithRoles(UserRepository userRepository)
+        private static void Load()
         {
-            return userRepository.ReadWithRole();
+            Console.Clear();
+            Console.WriteLine("Meu Blog");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("O que deseja fazer?");
+            Console.WriteLine();
+            Console.WriteLine("1 - Gestão de usuário");
+            Console.WriteLine("2 - Gestão de perfil");
+            Console.WriteLine("3 - Gestão de categoria");
+            Console.WriteLine("4 - Gestão de tag");
+            Console.WriteLine("5 - Vincular perfil/usuário");
+            Console.WriteLine("6 - Vincular post/tag");
+            Console.WriteLine("7 - Relatórios");
+            Console.WriteLine();
+            Console.WriteLine();
+            var option = short.Parse(Console.ReadLine()!);
+
+            switch (option)
+            {
+                case 4:
+                    MenuTagScreen.Load();
+                    break;
+                default: Load(); break;
+            }
         }
     }
 }
