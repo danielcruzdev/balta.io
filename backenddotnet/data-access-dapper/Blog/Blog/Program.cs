@@ -6,12 +6,13 @@ namespace Blog
 {
     public class Program
     {
-        private const string CONNECTION_STRING = @"Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
+        private const string CONNECTION_STRING = "Server=localhost,1433;Database=Blog;User ID=sa;Password=1q2w3e4r@#$";
 
         static void Main(string[] args)
         {
             using var connection = new SqlConnection(CONNECTION_STRING);
-            var repository = new Repository<User>(connection);
+            var userRepository = new Repository<User>(connection);
+            var repository = new Repository<Role>(connection);
 
             var user = new User()
             {
@@ -23,12 +24,29 @@ namespace Blog
                 Slug = "usuario-desafio"
             };
 
-            CreateUser(repository, user);
+            var role = new Role()
+            {
+                Name = "Teste",
+                Slug = "teste"
+            };
+
+            var userId = CreateUser(userRepository, user);
+            //CreateRole(repository, role);
         }
 
-        private static void CreateUser(Repository<User> repository, User user)
+        private static long CreateUser(Repository<User> repository, User user)
         {
-            repository.Create(user);
+            return repository.Create(user);
+        }
+
+        private static long CreateRole(Repository<Role> repository, Role role)
+        {
+            return repository.Create(role);
+        }
+
+        private static long LinkUserToRole(Repository<UserRole> repository, UserRole userRole)
+        {
+            return repository.Create(userRole);
         }
     }
 }

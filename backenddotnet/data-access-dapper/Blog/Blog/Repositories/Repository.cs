@@ -11,7 +11,7 @@ namespace Blog.Repositories
 
         public Repository(SqlConnection connection) => _connection = connection;
 
-        public void Create(TModel model) => _connection.Insert(model);
+        public long Create(TModel model) => _connection.Insert(model);
 
         public List<TModel> Read() => _connection.GetAll<TModel>().ToList();
 
