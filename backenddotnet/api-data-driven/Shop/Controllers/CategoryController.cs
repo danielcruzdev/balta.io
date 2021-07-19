@@ -3,13 +3,30 @@
 namespace Shop.Controllers
 {
     [Route("categories")]
-    [ApiController]
     public class CategoryController : ControllerBase
     {
-        [Route("")]
-        public string MeuMetodo()
+        [HttpGet]
+        public string Get()
         {
-            return "Olá mundo!";
+            return "GET";
+        }
+
+        [HttpPost]
+        public string Post()
+        {
+            return "POST";
+        }
+
+        [HttpPut]
+        public string Put()
+        {
+            return "PUT";
+        }
+
+        [HttpDelete]
+        public string Delete()
+        {
+            return "DELETE";
         }
     }
 }
