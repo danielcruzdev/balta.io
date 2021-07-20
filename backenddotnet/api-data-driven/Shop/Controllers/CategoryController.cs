@@ -11,6 +11,12 @@ namespace Shop.Controllers
             return "GET";
         }
 
+        [HttpGet("{categoryId:int}")]
+        public string GetById([FromRoute] int categoryId)
+        {
+            return $"GET: {categoryId}";
+        }
+
         [HttpPost]
         public string Post()
         {
