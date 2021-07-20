@@ -23,16 +23,22 @@ namespace Shop.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> Post([FromBody] Category category)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok(category);
         }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult<Category>> Put([FromRoute] int id, [FromBody] Category category)
         {
-            if (category.Id == id)
-                return Ok(category);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return NotFound();
+            if (category.Id != id)
+                return NotFound(new { message = "Categoria não encontrada!" });
+
+            return Ok(category);
         }
 
         [HttpDelete("{id:int}")]
