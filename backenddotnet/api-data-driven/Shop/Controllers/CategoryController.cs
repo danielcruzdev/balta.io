@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Models;
 
 namespace Shop.Controllers
 {
@@ -18,9 +19,9 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        public string Post()
+        public string Post([FromBody] Category category)
         {
-            return "POST";
+            return $"POST - {category.Title}";
         }
 
         [HttpPut]
