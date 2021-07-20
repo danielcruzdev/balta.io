@@ -24,10 +24,13 @@ namespace Shop.Controllers
             return $"POST - {category.Title}";
         }
 
-        [HttpPut]
-        public string Put()
+        [HttpPut("{id:int}")]
+        public Category Put([FromRoute] int id, [FromBody] Category category)
         {
-            return "PUT";
+            if (category.Id == id)
+                return category;
+            else
+                return null;
         }
 
         [HttpDelete]
