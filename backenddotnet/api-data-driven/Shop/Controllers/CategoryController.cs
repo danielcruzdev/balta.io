@@ -26,8 +26,8 @@ namespace Shop.Controllers
                                                           [FromServices] DataContext context)
         {
             var category = await context.Categories
-                            .AsNoTracking()
-                            .FirstOrDefaultAsync(x => x.Id == id);
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == id);
 
             if (category == null)
                 return NotFound(new { message = "Categoria não encontrada" });
@@ -88,7 +88,6 @@ namespace Shop.Controllers
                                                          [FromServices] DataContext context)
         {
             var category = await context.Categories
-                                        .AsNoTracking()
                                         .FirstOrDefaultAsync(x => x.Id == id);
             if (category == null)
                 return NotFound(new { message = "Categoria não encontrada" });
