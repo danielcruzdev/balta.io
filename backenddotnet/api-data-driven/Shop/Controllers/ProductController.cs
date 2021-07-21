@@ -19,7 +19,7 @@ namespace Shop.Controllers
             var products = await context.Products.Include(x => x.Category)
                                                  .AsNoTracking()
                                                  .ToListAsync();
-            return products;
+            return Ok(products);
         }
 
         [HttpGet("{id:int}")]
@@ -29,7 +29,7 @@ namespace Shop.Controllers
             var product = await context.Products.Include(x => x.Category)
                                                 .AsNoTracking()
                                                 .FirstOrDefaultAsync(x => x.Id == id);
-            return product;
+            return Ok(product);
         }
 
         [HttpGet("categories/{id:int}")]
@@ -40,7 +40,7 @@ namespace Shop.Controllers
                                                  .AsNoTracking()
                                                  .Where(x => x.CategoryId == id)
                                                  .ToListAsync();
-            return products;
+            return Ok(products);
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace Shop.Controllers
             {
                 context.Products.Add(model);
                 await context.SaveChangesAsync();
-                return model;
+                return Ok(model);
             }
             else
             {
