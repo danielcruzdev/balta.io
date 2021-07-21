@@ -12,15 +12,27 @@ namespace Shop.Controllers
     public class CategoryController : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> Get()
+        public async Task<ActionResult<IEnumerable<Category>>> Get([FromServices] DataContext context)
         {
-            return new List<Category>();
+            var categories = await context.Categories
+                                          .AsNoTracking()
+                                          .ToListAsync();
+
+            return Ok(categories);
         }
 
-        [HttpGet("{categoryId:int}")]
-        public async Task<ActionResult<Category>> GetById([FromRoute] int categoryId)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Category>> GetById([FromRoute] int id,
+                                                          [FromServices] DataContext context)
         {
-            return new Category();
+            var category = await context.Categories
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (category == null)
+                return NotFound(new { message = "Categoria não encontrada" });
+
+            return Ok(category);
         }
 
         [HttpPost]
@@ -56,7 +68,7 @@ namespace Shop.Controllers
 
             try
             {
-                context.Entry<Category>(category).State = EntityState.Modified;
+                context.Entry(category).State = EntityState.Modified;
                 await context.SaveChangesAsync();
 
                 return Ok(category);
@@ -72,9 +84,25 @@ namespace Shop.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Category>> Delete([FromRoute] int id)
+        public async Task<ActionResult<Category>> Delete([FromRoute] int id,
+                                                         [FromServices] DataContext context)
         {
-            return Ok();
+            var category = await context.Categories
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == id);
+            if (category == null)
+                return NotFound(new { message = "Categoria não encontrada" });
+
+            try
+            {
+                context.Categories.Remove(category);
+                await context.SaveChangesAsync();
+                return Ok(new { message = "Categoria removida com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro ao excluir Categoria: {ex.Message}" });
+            }
         }
     }
 }
