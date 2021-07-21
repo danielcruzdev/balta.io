@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Data;
 using Shop.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,12 +23,23 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> Post([FromBody] Category category)
+        public async Task<ActionResult<Category>> Post([FromBody] Category category,
+                                                       [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            return Ok(category);
+            try
+            {
+                await context.Categories.AddAsync(category);
+                await context.SaveChangesAsync();
+
+                return Ok(category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro ao salvar Categoria: {ex.Message}" });
+            }
         }
 
         [HttpPut("{id:int}")]
