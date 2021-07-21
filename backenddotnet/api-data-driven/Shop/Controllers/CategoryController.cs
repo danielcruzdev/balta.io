@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Models;
 using System;
@@ -43,7 +44,9 @@ namespace Shop.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<Category>> Put([FromRoute] int id, [FromBody] Category category)
+        public async Task<ActionResult<Category>> Put([FromRoute] int id,
+                                                      [FromBody] Category category,
+                                                      [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -51,7 +54,21 @@ namespace Shop.Controllers
             if (category.Id != id)
                 return NotFound(new { message = "Categoria não encontrada!" });
 
-            return Ok(category);
+            try
+            {
+                context.Entry<Category>(category).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+
+                return Ok(category);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(new { message = $"Este registro acabou de ser atualizado: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro ao atualizar Categoria: {ex.Message}" });
+            }
         }
 
         [HttpDelete("{id:int}")]
