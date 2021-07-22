@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
-    [Route("v1/users")]
+    [Route("users")]
     public class UserController : Controller
     {
         [HttpGet]
@@ -53,7 +53,6 @@ namespace Shop.Controllers
             catch (Exception)
             {
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
-
             }
         }
 
@@ -82,7 +81,6 @@ namespace Shop.Controllers
             catch (Exception)
             {
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
-
             }
         }
 
