@@ -20,6 +20,7 @@ namespace Shop.Controllers
         public async Task<ActionResult<List<User>>> Get([FromServices] DataContext context)
         {
             var users = await context
+
                 .Users
                 .AsNoTracking()
                 .ToListAsync();
