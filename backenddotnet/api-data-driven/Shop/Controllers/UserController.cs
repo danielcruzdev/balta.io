@@ -20,7 +20,6 @@ namespace Shop.Controllers
         public async Task<ActionResult<List<User>>> Get([FromServices] DataContext context)
         {
             var users = await context
-
                 .Users
                 .AsNoTracking()
                 .ToListAsync();
@@ -62,7 +61,7 @@ namespace Shop.Controllers
         [Authorize(Roles = "manager")]
         public async Task<ActionResult<User>> Put(
             [FromServices] DataContext context,
-            int id,
+            [FromRoute] int id,
             [FromBody] User model)
         {
             // Verifica se os dados são válidos
@@ -82,6 +81,28 @@ namespace Shop.Controllers
             catch (Exception)
             {
                 return BadRequest(new { message = "Não foi possível criar o usuário" });
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize(Roles = "manager")]
+        public async Task<ActionResult<User>> Put([FromServices] DataContext context, [FromRoute] int id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+                return NotFound(new { message = "Usuário não encontrado" });
+
+            try
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+                return Ok("Usuario Excluido com Sucesso!");
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Não foi possível excluir o usuário" });
             }
         }
 
