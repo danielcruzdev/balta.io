@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
-    [Route("products")]
+    [Route("v1/products")]
     public class ProductController : Controller
     {
         [HttpGet]
@@ -44,7 +44,7 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "employee")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Product>> Post([FromServices] DataContext context,
                                                       [FromBody] Product model)
         {

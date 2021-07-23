@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Models;
@@ -8,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
-    [Route("categories")]
+    [Route("v1/categories")]
     public class CategoryController : ControllerBase
     {
         [HttpGet]
+        [AllowAnonymous]
+        [ResponseCache(VaryByHeader = "User-Agent", Location = ResponseCacheLocation.Any, Duration = 30)]
+        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None, Duration = 0)]
         public async Task<ActionResult<IEnumerable<Category>>> Get([FromServices] DataContext context)
         {
             var categories = await context.Categories
@@ -22,6 +26,8 @@ namespace Shop.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
+
         public async Task<ActionResult<Category>> GetById([FromRoute] int id,
                                                           [FromServices] DataContext context)
         {
@@ -36,6 +42,7 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Post([FromBody] Category category,
                                                        [FromServices] DataContext context)
         {
@@ -56,6 +63,7 @@ namespace Shop.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Put([FromRoute] int id,
                                                       [FromBody] Category category,
                                                       [FromServices] DataContext context)
@@ -84,6 +92,7 @@ namespace Shop.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<ActionResult<Category>> Delete([FromRoute] int id,
                                                          [FromServices] DataContext context)
         {
