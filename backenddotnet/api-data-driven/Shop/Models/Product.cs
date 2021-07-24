@@ -25,7 +25,5 @@ namespace Shop.Models
 
         //Propriedade de referência.
         public Category Category { get; set; }
-
-        public Category Category2 { get; set; }
     }
 }
