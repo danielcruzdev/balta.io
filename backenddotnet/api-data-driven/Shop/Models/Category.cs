@@ -11,5 +11,7 @@ namespace Shop.Models
         [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 catacteres")]
         [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 60 catacteres")]
         public string Title { get; set; }
+
+        public string Summary { get; set; }
     }
 }
