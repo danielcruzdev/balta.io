@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentContext.Domain", "PaymentContext.Domain\PaymentContext.Domain.csproj", "{858DE2D8-971B-4F80-A33C-FD963C0AE3C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{858DE2D8-971B-4F80-A33C-FD963C0AE3C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858DE2D8-971B-4F80-A33C-FD963C0AE3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858DE2D8-971B-4F80-A33C-FD963C0AE3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858DE2D8-971B-4F80-A33C-FD963C0AE3C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D28D37A-4AF7-4BCD-BF4D-7CB51C9ACE90}
+	EndGlobalSection
+EndGlobal
