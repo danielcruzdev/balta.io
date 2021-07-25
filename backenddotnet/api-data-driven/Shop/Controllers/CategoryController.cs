@@ -98,7 +98,7 @@ namespace Shop.Controllers
         {
             var category = await context.Categories
                                         .FirstOrDefaultAsync(x => x.Id == id);
-            if (category === null)
+            if (category == null)
                 return NotFound(new { message = "Categoria não encontrada" });
 
             try
