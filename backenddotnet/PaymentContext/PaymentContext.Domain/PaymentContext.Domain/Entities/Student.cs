@@ -4,8 +4,12 @@ namespace PaymentContext.Domain.Entities
 {
     public class Student
     {
-        public Student()
+        public Student(string firstName, string lastName, string document, string email)
         {
+            FirstName = firstName;
+            LastName = lastName;
+            Document = document;
+            Email = email;
             Subscriptions = new List<Subscription>();
         }
 
