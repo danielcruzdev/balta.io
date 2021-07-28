@@ -2,7 +2,7 @@
 {
     public class BoletoPayment : Payment
     {
-        public string BarCode { get; set; }
+        public string BarCode { get; prset; }
         public string Email { get; set; }
         public string BoletoNumber { get; set; }
     }
