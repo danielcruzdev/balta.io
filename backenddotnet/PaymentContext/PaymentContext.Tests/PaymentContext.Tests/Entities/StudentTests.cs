@@ -7,10 +7,11 @@ namespace PaymentContext.Tests.Entities
     public class StudentTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AdicionarAssinatura()
         {
+            var subscription = new Subscription();
             var student = new Student("Daniel", "Cruz", "123456789", "d.afc98@gmail.com");
-
+            student.AddSubscription(subscription);
         }
     }
 }
