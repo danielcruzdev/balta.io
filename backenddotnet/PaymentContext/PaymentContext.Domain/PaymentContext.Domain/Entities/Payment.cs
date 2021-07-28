@@ -9,6 +9,7 @@ namespace PaymentContext.Domain.Entities
         public DateTime ExpireDate { get; set; }
         public decimal Total { get; set; }
         public decimal TotalPaid { get; set; }
+        public string Adress { get; set; }
     }
 
     public class BoletoPayment : Payment
