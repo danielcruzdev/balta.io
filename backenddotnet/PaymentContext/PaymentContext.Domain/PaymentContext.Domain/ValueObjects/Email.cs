@@ -2,6 +2,11 @@
 {
     public class Email
     {
-        public string Email { get; private set; }
+        public Email(string address)
+        {
+            Address = address;
+        }
+
+        public string Address { get; private set; }
     }
 }

@@ -8,7 +8,7 @@ namespace PaymentContext.Domain.Entities
     {
         private IList<Subscription> _subscriptions;
 
-        public Student(Name name, Document document, string email)
+        public Student(Name name, Document document, Email email)
         {
             Name = name;
             Document = document;
@@ -18,6 +18,7 @@ namespace PaymentContext.Domain.Entities
 
         public Name Name { get; set; }
         public Document Document { get; set; }
+        public Email Email { get; set; }
         public string Address { get; private set; }
         public IReadOnlyCollection<Subscription> Subscriptions
         {
