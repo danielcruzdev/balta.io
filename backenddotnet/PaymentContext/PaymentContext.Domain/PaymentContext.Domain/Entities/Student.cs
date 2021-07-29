@@ -20,7 +20,7 @@ namespace PaymentContext.Domain.Entities
         public Name Name { get; set; }
         public Document Document { get; set; }
         public Email Email { get; set; }
-        public string Address { get; private set; }
+        public Address Address { get; private set; }
         public IReadOnlyCollection<Subscription> Subscriptions
         {
             get => _subscriptions.ToArray();
