@@ -22,7 +22,6 @@ namespace PaymentContext.Tests.Entities
             _email = new Email("batman@dc.com");
             _address = new Address("Rua 1", "1234", "Bairro Legal", "Gotham", "SP", "BR", "13400000");
             _student = new Student(_name, _document, _email);
-
         }
 
         [TestMethod]
