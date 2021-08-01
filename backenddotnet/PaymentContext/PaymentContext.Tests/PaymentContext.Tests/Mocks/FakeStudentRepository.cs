@@ -12,7 +12,7 @@ namespace PaymentContext.Tests.Mocks
 
         public bool DocumentExists(string document)
         {
-            if (document == "99999999999")
+            if (document == "12332112310")
                 return true;
 
             return false;
@@ -20,7 +20,7 @@ namespace PaymentContext.Tests.Mocks
 
         public bool EmailExists(string email)
         {
-            if (email == "hello@balta.io")
+            if (email == "d.afc98@gmail.com")
                 return true;
 
             return false;
