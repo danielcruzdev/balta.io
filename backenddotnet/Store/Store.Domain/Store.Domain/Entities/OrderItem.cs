@@ -5,7 +5,7 @@
         public OrderItem(Product product, decimal price, int quantity)
         {
             Product = product;
-            Price = price;
+            Price = Product != null ? product.Price : 0;
             Quantity = quantity;
         }
 
