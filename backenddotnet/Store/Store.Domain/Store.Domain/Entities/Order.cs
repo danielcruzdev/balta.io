@@ -44,5 +44,13 @@ namespace Store.Domain.Entities
 
             return total;
         }
+
+        public void Pay(decimal amount)
+        {
+            if (amount == Total())
+                Status = EOrderStatus.WaitingDelivery;
+        }
+
+        public void Cancel() => Status = EOrderStatus.Canceled;
     }
 }
