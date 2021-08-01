@@ -2,7 +2,7 @@
 {
     public class OrderItem : Entity
     {
-        public OrderItem(Product product, decimal price, int quantity)
+        public OrderItem(Product product, int quantity)
         {
             Product = product;
             Price = Product != null ? product.Price : 0;
