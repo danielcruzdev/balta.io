@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Store.Domain.StoreContext
+namespace Store.Domain.StoreContext.Entities
 {
     public class Delivery
     {
