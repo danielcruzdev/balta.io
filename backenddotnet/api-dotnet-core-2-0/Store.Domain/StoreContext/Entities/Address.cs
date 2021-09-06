@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Store.Domain.StoreContext.ValueObjects
+namespace Store.Domain.StoreContext.Entities
 {
     public class Address
     {

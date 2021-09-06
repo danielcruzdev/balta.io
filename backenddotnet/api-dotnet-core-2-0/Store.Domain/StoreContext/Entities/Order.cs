@@ -17,14 +17,14 @@ namespace Store.Domain.StoreContext.Entities
             _Deliveries = new List<Delivery>();
         }
 
-        private IList<OrderItem> _Items { get; set; }
-        private IList<Delivery> _Deliveries { get; set; }
+        private readonly IList<OrderItem> _Items;
+        private readonly IList<Delivery> _Deliveries;
         public Customer Customer { get; private set; }
         public string Number { get; private set; }
         public DateTime CreateDate { get; private set; }
         public EOrderStatus Status { get; private set; }
-        public IReadOnlyCollection<OrderItem> Items { get => _Items.ToList(); private set { } }
-        public IReadOnlyCollection<Delivery> Deliveries { get => _Deliveries.ToList(); private set { } }
+        public IReadOnlyCollection<OrderItem> Items => _Items.ToArray();
+        public IReadOnlyCollection<Delivery> Deliveries => _Deliveries.ToArray();
 
         public void AddItem(OrderItem item)
         {
