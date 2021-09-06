@@ -13,8 +13,6 @@ namespace Store.Domain.StoreContext.Entities
             Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 8).ToUpper();
             CreateDate = DateTime.Now;
             Status = EOrderStatus.Created;
-            Items = new List<OrderItem>();
-            Deliveries = new List<Delivery>();
             _Items = new List<OrderItem>();
             _Deliveries = new List<Delivery>();
         }
