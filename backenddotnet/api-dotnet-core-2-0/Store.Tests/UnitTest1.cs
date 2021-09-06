@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Store.Domain.StoreContext.Entities;
 
 namespace Store.Tests
 {
