@@ -33,8 +33,9 @@ namespace Store.Domain.StoreContext.Entities
         }
 
         public void Place() 
-        { 
-                          
+        {
+            if (_Items.Count == 0)
+                AddNotification("Order", "Este pedido não possui itens");
         }
 
         public void Pay()
