@@ -56,7 +56,10 @@ namespace BaltaStore.Domain.StoreContext.Entities
         {
             // A cada 5 produtos � uma entrega
             var deliveries = new List<Delivery>();
-            // deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+
+            if (_items.Count < 5)
+                deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+
             var count = 1;
 
             // Quebra as entregas
