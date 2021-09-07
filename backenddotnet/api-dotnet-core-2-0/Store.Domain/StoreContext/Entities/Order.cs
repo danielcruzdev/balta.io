@@ -21,7 +21,7 @@ namespace Store.Domain.StoreContext.Entities
         private readonly IList<Delivery> _Deliveries;
         public Customer Customer { get; private set; }
         public string Number { get; private set; }
-        public DateTime CreateDate { get; private set; }
+        public DateTime CreateDate { get; private set; } 
         public EOrderStatus Status { get; private set; }
         public IReadOnlyCollection<OrderItem> Items => _Items.ToArray();
         public IReadOnlyCollection<Delivery> Deliveries => _Deliveries.ToArray();
@@ -31,12 +31,41 @@ namespace Store.Domain.StoreContext.Entities
             _Items.Add(item);
         }
 
-
-        public void AddDelivery(Delivery delivery)
-        {
-            _Deliveries.Add(delivery);
+        public void Place() 
+        { 
+                          
         }
 
-        public void Place() { }
+        public void Pay()
+        {
+            Status = EOrderStatus.Paid;
+        }
+
+        public void Ship()
+        {
+            var deliveries = new List<Delivery>();
+            deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+            var count = 1;
+
+            foreach (var item in _Items)
+            {
+                if (count == 5)
+                {
+                    count = 1;
+                    deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+                }
+
+                count++;
+            }
+
+            deliveries.ForEach(x => x.Ship());
+            deliveries.ForEach(x => _Deliveries.Add(x));
+        }
+
+        public void Cancel()
+        {
+            Status = EOrderStatus.Canceled;
+            _Deliveries.ToList().ForEach(x => x.Cancel());
+        }
     }
 }
