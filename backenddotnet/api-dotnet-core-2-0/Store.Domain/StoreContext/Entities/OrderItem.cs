@@ -1,12 +1,17 @@
-﻿namespace Store.Domain.StoreContext.Entities
+﻿using FluentValidator;
+
+namespace Store.Domain.StoreContext.Entities
 {
-    public class OrderItem
+    public class OrderItem : Notifiable
     {
         public OrderItem(Product product, decimal quantity)
         {
             Product = product;
             Quantity = quantity;
             Price = Product.Price;
+
+            if (product.QuantityOnHand < quantity)
+                AddNotification("Quantidade", $"Temos apenas {product.QuantityOnHand} unidades em estoque!");
         }
 
         public Product Product { get; private set; }

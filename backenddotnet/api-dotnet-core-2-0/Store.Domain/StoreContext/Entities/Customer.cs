@@ -1,10 +1,11 @@
-﻿using Store.Domain.StoreContext.ValueObjects;
+﻿using FluentValidator;
+using Store.Domain.StoreContext.ValueObjects;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Store.Domain.StoreContext.Entities
 {
-    public class Customer
+    public class Customer : Notifiable
     {
         public Customer(Name name, Document document, Email email, string phone)
         {

@@ -1,11 +1,12 @@
-﻿using Store.Domain.StoreContext.Enums;
+﻿using FluentValidator;
+using Store.Domain.StoreContext.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Store.Domain.StoreContext.Entities
 {
-    public class Order
+    public class Order : Notifiable
     {
         public Order(Customer customer)
         {
