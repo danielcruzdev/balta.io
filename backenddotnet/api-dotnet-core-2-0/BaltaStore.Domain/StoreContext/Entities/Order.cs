@@ -1,9 +1,8 @@
 using BaltaStore.Domain.StoreContext.Enums;
-using FluentValidator;
+using BaltaStore.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BaltaStore.Shared.Entities;
 
 namespace BaltaStore.Domain.StoreContext.Entities
 {
@@ -30,17 +29,17 @@ namespace BaltaStore.Domain.StoreContext.Entities
 
         public void AddItem(Product product, decimal quantity)
         {
-            if(quantity > product.QuantityOnHand)
+            if (quantity > product.QuantityOnHand)
                 AddNotification("OrderItem", $"Produto {product.Title} não tem {quantity} itens em estoque.");
-            
+
             var item = new OrderItem(product, quantity);
-            _items.Add(item);            
+            _items.Add(item);
         }
 
         // Criar um pedido
         public void Place()
         {
-            // Gera o n�mero do pedido
+            // Gera o numero do pedido
             Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 8).ToUpper();
             if (_items.Count == 0)
                 AddNotification("Order", "Este pedido não possui itens");
