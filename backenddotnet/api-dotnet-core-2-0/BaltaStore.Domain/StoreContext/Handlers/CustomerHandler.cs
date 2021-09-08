@@ -9,6 +9,7 @@ using FluentValidator;
 
 namespace BaltaStore.Domain.StoreContext.Handlers
 {
+    [System.Runtime.InteropServices.Guid("A62995AD-8530-448A-9683-02AF6D29BA3B")]
     public class CustomerHandler :
         Notifiable,
         ICommandHandler<CreateCustomerCommand>,
