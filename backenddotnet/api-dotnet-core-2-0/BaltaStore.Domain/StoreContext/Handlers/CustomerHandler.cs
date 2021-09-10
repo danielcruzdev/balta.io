@@ -1,4 +1,3 @@
-using System;
 using BaltaStore.Domain.StoreContext.CustomerCommands.Inputs;
 using BaltaStore.Domain.StoreContext.Entities;
 using BaltaStore.Domain.StoreContext.Repositories;
@@ -39,7 +38,6 @@ namespace BaltaStore.Domain.StoreContext.Handlers
             var document = new Document(command.Document);
             var email = new Email(command.Email);
 
-            // Criar a entidade
             var customer = new Customer(name, document, email, command.Phone);
 
             // Validar entidades e VOs
