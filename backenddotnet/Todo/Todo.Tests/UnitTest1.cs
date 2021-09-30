@@ -1,12 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Todo.Tests;
-
-[TestClass]
-public class UnitTest1
+namespace Todo.Tests
 {
-    [TestMethod]
-    public void TestMethod1()
+    [TestClass]
+    public class UnitTest1
     {
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
     }
 }
