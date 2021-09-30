@@ -4,16 +4,15 @@ using BaltaStore.Domain.StoreContext.Services;
 using BaltaStore.Infra.DataContexts;
 using BaltaStore.Infra.StoreContext.Repositories;
 using BaltaStore.Infra.StoreContext.Services;
+using BaltaStore.Shared;
+using Elmah.Io.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using Elmah.Io.AspNetCore;
 using System;
-using Microsoft.Extensions.Configuration;
 using System.IO;
-using BaltaStore.Shared;
 
 namespace BaltaStore.Api
 {
@@ -39,10 +38,7 @@ namespace BaltaStore.Api
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<CustomerHandler, CustomerHandler>();
 
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new Info { Title = "Balta Store", Version = "v1" });
-            });
+            services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Info { Title = "Balta Store", Version = "v1" }));
 
             Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }
