@@ -45,6 +45,19 @@ namespace Todo.Api.Controllers
         }
 
 
+        [HttpGet("done/tomorrow")]
+        public IEnumerable<TodoItem> GetDoneForTomorrow([FromServices] ITodoRepository repository)
+        {
+            return repository.GetByPeriod("Daniel Cruz", DateTime.Now.Date.AddDays(1), true);
+        }
+
+        [HttpGet("undone/tomorrow")]
+        public IEnumerable<TodoItem> GetUndoneForTomorrow([FromServices] ITodoRepository repository)
+        {
+            return repository.GetByPeriod("Daniel Cruz", DateTime.Now.Date.AddDays(1), false);
+        }
+
+
         [HttpPost]
         public GenericCommandResult Create([FromBody] CreateTodoCommand command,
                                            [FromServices] TodoHandler handler)
