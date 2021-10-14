@@ -24,12 +24,12 @@
       maxlength="60"
       formControlName="title"
     /><br />
-    <small
+    <p
       class="danger"
       *ngIf="form.controls.title.invalid && !form.controls.title.pristine"
     >
       Este campo deve conter entre 3 e 60caracteres<br />
-    </small>
+    </p>
     <p class="text-center">
       <button [disabled]="form.invalid" (click)="add()" class="button">
         <i class="far fa-save"></i> Salvar

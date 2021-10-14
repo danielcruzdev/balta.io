@@ -4,7 +4,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
   text-align: center;
   background: #3023ae;
@@ -38,7 +38,7 @@ li {
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-li>button {
+li > button {
   border: none;
   background-color: #fff;
   font-size: 1em;
@@ -47,13 +47,13 @@ li>button {
   transition: opacity 1s;
 }
 
-li>button:hover {
+li > button:hover {
   opacity: 1;
   transition: opacity 1s;
 }
 
 .title {
-  font-family: 'Dancing Script', cursive;
+  font-family: "Dancing Script", cursive;
   color: #fff;
   font-size: 5em;
   text-shadow: 3px 5px #000;
@@ -87,7 +87,7 @@ li>button:hover {
   box-shadow: 3px 4px 14px 0px rgba(0, 0, 0, 0.39);
 }
 
-#modal>h1 {
+#modal > h1 {
   font-weight: 300;
 }
 
@@ -102,6 +102,8 @@ input {
   background-color: #ff0000;
   color: #fff;
   font-weight: bold;
+  width: 345px;
+  font-size: 14px;
   padding: 5px;
   margin-top: 10px;
 }
