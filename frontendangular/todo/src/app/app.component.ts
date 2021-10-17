@@ -10,7 +10,7 @@ import { Todo } from "src/models/todo.model";
 export class AppComponent {
   public todos: Todo[] = [];
   public form: FormGroup;
-  public mode: String = "list";
+  public mode: string = "list";
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -27,7 +27,7 @@ export class AppComponent {
     this.load();
   }
 
-  changeMode(mode: String) {
+  changeMode(mode: string) {
     this.mode = mode;
   }
 
