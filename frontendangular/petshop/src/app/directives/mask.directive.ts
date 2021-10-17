@@ -21,6 +21,7 @@ export class MaskDirective {
         }
 
         this.element.nativeElement.value = this.format(this.mask, initalValue);
+        
     }
 
     format(mask: string, value: any): string {
