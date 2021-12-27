@@ -1,11 +1,14 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Todo } from "src/models/todo.model";
+import { token } from "src/token"
 
 @Component({
   selector: "app-root", // <app-root>
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  styles: [
+    'h1 {font-size: }'
+  ],
 })
 export class AppComponent {
   public todos: Todo[] = [];
