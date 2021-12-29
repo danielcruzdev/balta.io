@@ -9,9 +9,17 @@ namespace Todo.Controller
     public class HomeController : ControllerBase
     {
         [HttpGet("/")]
-        public ActionResult<List<TodoModel>> Get([FromServices] DatabaseContext context)
+        public ActionResult<List<TodoModel>> Get([FromServices] DatabaseContext context) => Ok(context.Todo.ToList());
+
+        [HttpGet("/{id:int}")]
+        public ActionResult<TodoModel> Get([FromRoute] int id,
+                                           [FromServices] DatabaseContext context)
         {
-            return Ok(context.Todo.ToList());
+            var todo = context.Todo.FirstOrDefault();
+            if (todo == null)
+                return NotFound();
+
+            return Ok(todo);
         }
 
         [HttpPost("/")]
@@ -21,17 +29,41 @@ namespace Todo.Controller
         {
             context.Todo.Add(todo);
             context.SaveChanges();
-            return Ok(todo);
+            return Created($"/{todo.Id}", todo);
         }
 
-        [HttpPut("/")]
-        public ActionResult<List<TodoModel>> Put(
-        [FromBody] TodoModel todo,
-        [FromServices] DatabaseContext context)
+        [HttpPut("/{id:int}")]
+        public ActionResult<TodoModel> Put([FromRoute] int id,
+                                           [FromBody] TodoModel todo,
+                                           [FromServices] DatabaseContext context)
         {
-            context.Todo.Update(todo);
+            var model = context.Todo.FirstOrDefault(x => x.Id == id);
+
+            if (model == null)
+                return NotFound();
+
+            model.Title = todo.Title;
+            model.Done = todo.Done;
+
+            context.Todo.Update(model);
             context.SaveChanges();
-            return Ok(todo);
+
+            return Ok(model);
+        }
+
+        [HttpDelete("/{id:int}")]
+        public ActionResult<TodoModel> Delete([FromRoute] int id,
+                                   [FromServices] DatabaseContext context)
+        {
+            var model = context.Todo.FirstOrDefault(x => x.Id == id);
+
+            if (model == null)
+                return NotFound();
+
+            context.Todo.Remove(model);
+            context.SaveChanges();
+
+            return Ok(model);
         }
     }
 }
