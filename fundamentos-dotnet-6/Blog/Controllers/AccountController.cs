@@ -7,6 +7,7 @@ using Blog.ViewModels.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SecureIdentity.Password;
 
 namespace Blog.Controllers
@@ -43,16 +44,40 @@ namespace Blog.Controllers
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<Category>("Falha interna no servidor!"));
+                return StatusCode(500, new ResultViewModel<string>("Falha interna no servidor!"));
             }
 
             return Ok();
         }
 
         [HttpPost("v1/accounts/login")]
-        public IActionResult Login([FromServices] TokenService tokenService)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model, 
+                                   [FromServices] TokenService tokenService,
+                                   [FromServices] BlogDataContext context)
         {
-            return Ok(tokenService.GenerateToken(null));
+            if (!ModelState.IsValid)
+                return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
+
+            var user = await context.Users
+                                    .AsNoTracking()
+                                    .Include(x => x.Roles)
+                                    .FirstOrDefaultAsync(x => x.Email == model.Email);
+
+            if (user == null)
+                return StatusCode(401, new ResultViewModel<string>("Usuário ou senha inválidos!"));
+
+            if(!PasswordHasher.Verify(user.PasswordHash, model.Password))
+                return StatusCode(401, new ResultViewModel<string>("Usuário ou senha inválidos!"));
+
+            try
+            {
+                var token = tokenService.GenerateToken(user);
+                return Ok(new ResultViewModel<string>(token, null));
+            }
+            catch
+            {
+                return StatusCode(500, new ResultViewModel<string>("Falha interna no servidor!"));
+            }
         }
     }
 }
