@@ -5,6 +5,7 @@ using Blog.ViewModels.Categories;
 using Blog.ViewModels.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Blog.Controllers
 {
@@ -12,11 +13,16 @@ namespace Blog.Controllers
     public class CategoryController : ControllerBase
     {
         [HttpGet("v1/categories")]
-        public async Task<IActionResult> GetAsync([FromServices] BlogDataContext context)
+        public async Task<IActionResult> GetAsync([FromServices] BlogDataContext context, [FromServices] IMemoryCache cache)
         {
             try
             {
-                var categories = await context.Categories.ToListAsync();
+                var categories = await cache.GetOrCreate("CategoriesCache", entry =>
+                {
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+                    return GetCategories(context);
+                });
+
                 return Ok(new ResultViewModel<List<Category>>(categories));
             }
             catch
@@ -74,7 +80,6 @@ namespace Blog.Controllers
                 return StatusCode(500, new ResultViewModel<Category>("Falha interna no servidor!"));
             }
         }
-
         [HttpPut("v1/categories/{id:int}")]
         public async Task<IActionResult> PutAsync([FromRoute] int id,
                                                    [FromBody] EditorCategoryViewModel model,
@@ -107,7 +112,6 @@ namespace Blog.Controllers
                 return StatusCode(500, new ResultViewModel<Category>("Falha interna no servidor!"));
             }
         }
-
         [HttpDelete("v1/categories/{id:int}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id,
                                                      [FromServices] BlogDataContext context)
@@ -132,6 +136,10 @@ namespace Blog.Controllers
             {
                 return StatusCode(500, new ResultViewModel<Category>("Falha interna no servidor!"));
             }
+        }
+        private async Task<List<Category>> GetCategories(BlogDataContext context)
+        {
+            return await context.Categories.ToListAsync();
         }
     }
 }
