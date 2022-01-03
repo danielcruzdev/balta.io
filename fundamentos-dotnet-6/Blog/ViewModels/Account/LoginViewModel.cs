@@ -9,6 +9,6 @@ namespace Blog.ViewModels.Account
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe a senha")]
-        public strig Password { get; set; }
+        public string Password { get; set; }
     }
 }
