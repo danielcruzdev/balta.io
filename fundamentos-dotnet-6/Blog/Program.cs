@@ -7,38 +7,66 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-builder.Services
-       .AddAuthentication(x =>
-        {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-       .AddJwtBearer(x =>
-        {
-            x.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true
-            };
-        });
-
-builder.Services.AddControllers()
-                .ConfigureApiBehaviorOptions(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
-
-builder.Services.AddDbContext<BlogDataContext>();
-builder.Services.AddTransient<TokenService>();
+ConfigureAuthentication(builder);
+ConfigureMVC(builder);
+ConfigureServices(builder);
 
 var app = builder.Build();
+
+LoadConfiguration(app);
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
+
+static void LoadConfiguration(WebApplication app)
+{
+    Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
+    Configuration.ApiKeyName = app.Configuration.GetValue<string>("ApiKeyName");
+    Configuration.ApiKey = app.Configuration.GetValue<string>("ApiKey");
+
+    var smtp = new Configuration.SMTPConfiguration();
+    app.Configuration.GetSection("SMTP").Bind(smtp);
+    Configuration.SMTP = smtp;
+}
+
+static void ConfigureAuthentication(WebApplicationBuilder builder)
+{
+    var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
+    builder.Services
+           .AddAuthentication(x =>
+           {
+               x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+               x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+           })
+           .AddJwtBearer(x =>
+           {
+               x.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(key),
+                   ValidateIssuer = false,
+                   ValidateAudience = false,
+                   ValidateLifetime = true
+               };
+           });
+
+}
+
+static void ConfigureMVC(WebApplicationBuilder builder)
+{
+    builder.Services.AddControllers()
+.ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+}
+
+static void ConfigureServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddDbContext<BlogDataContext>();
+    builder.Services.AddTransient<TokenService>();
+    builder.Services.AddTransient<EmailService>();
+}
